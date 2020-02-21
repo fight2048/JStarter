@@ -14,7 +14,6 @@ import com.qiniu.util.Auth;
 import lombok.SneakyThrows;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.File;
 import java.io.InputStream;
 import java.time.LocalDate;
 import java.util.Date;
@@ -143,7 +142,7 @@ public class QiniuCloudTemplate implements OssTemplate {
      */
     @Override
     public String getFilePath(String fileName) {
-        return getBucketName().concat(File.separator)
+        return getBucketName().concat("/")
                 .concat(fileName);
     }
 
@@ -156,7 +155,7 @@ public class QiniuCloudTemplate implements OssTemplate {
      */
     @Override
     public String getFilePath(String bucketName, String fileName) {
-        return bucketName.concat(File.separator)
+        return bucketName.concat("/")
                 .concat(fileName);
     }
 
@@ -170,7 +169,7 @@ public class QiniuCloudTemplate implements OssTemplate {
     public String getFileLink(String fileName) {
         return ossProperties.getQiniuCloud()
                 .getEndpoint()
-                .concat(File.separator)
+                .concat("/")
                 .concat(fileName);
     }
 
@@ -185,7 +184,7 @@ public class QiniuCloudTemplate implements OssTemplate {
     public String getFileLink(String bucketName, String fileName) {
         return ossProperties.getQiniuCloud()
                 .getEndpoint()
-                .concat(File.separator)
+                .concat("/")
                 .concat(fileName);
     }
 
@@ -361,6 +360,6 @@ public class QiniuCloudTemplate implements OssTemplate {
      * @return 文件名
      */
     private String getFileName(String originalFilename) {
-        return "upload" + File.separator + LocalDate.now() + File.separator + UUID.randomUUID() + "." + Utils.fileExt(originalFilename);
+        return "upload/" + LocalDate.now() + "/" + UUID.randomUUID().toString().replace("-", "") + "." + Utils.fileExt(originalFilename);
     }
 }

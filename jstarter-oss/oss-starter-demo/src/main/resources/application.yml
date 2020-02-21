@@ -2,15 +2,18 @@ spring:
   output:
     ansi:
       enabled: ALWAYS
+  servlet:
+      multipart:
+        max-file-size: 10MB
+        max-request-size: 100MB
 server:
-  port: 8011
+  port: 8012
 
 oss:
   aliyun-oss:
-    access-key: LTA**************WHXtC
-    secret-key: PQw*************************r3
-    endpoint: oss-cn-hangzhou.aliyuncs.com
-    bucket-name: test
-    https: false
+    access-key: LTAI4FfXbPZstemB9VzirwrC
+    secret-key: u6dPlvYKAEYO1rS8eiHh9AUi92q2IW
+    endpoint: oss-cn-shenzhen.aliyuncs.com
+    bucket-name: turing-cloud-test
+    https: true
     enabled: true
-

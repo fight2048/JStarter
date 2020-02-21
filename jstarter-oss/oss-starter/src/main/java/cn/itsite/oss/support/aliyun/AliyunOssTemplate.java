@@ -173,7 +173,7 @@ public class AliyunOssTemplate implements OssTemplate {
      */
     @Override
     public String getFilePath(String fileName) {
-        return getOssEndpoint().concat(File.separator)
+        return getOssEndpoint().concat("/")
                 .concat(fileName);
     }
 
@@ -186,7 +186,7 @@ public class AliyunOssTemplate implements OssTemplate {
      */
     @Override
     public String getFilePath(String bucketName, String fileName) {
-        return getOssEndpoint(bucketName).concat(File.separator)
+        return getOssEndpoint(bucketName).concat("/")
                 .concat(fileName);
     }
 
@@ -198,7 +198,7 @@ public class AliyunOssTemplate implements OssTemplate {
      */
     @Override
     public String getFileLink(String fileName) {
-        return getOssEndpoint().concat(File.separator)
+        return getOssEndpoint().concat("/")
                 .concat(fileName);
     }
 
@@ -211,7 +211,7 @@ public class AliyunOssTemplate implements OssTemplate {
      */
     @Override
     public String getFileLink(String bucketName, String fileName) {
-        return getOssEndpoint(bucketName).concat(File.separator)
+        return getOssEndpoint(bucketName).concat("/")
                 .concat(fileName);
     }
 
@@ -420,6 +420,6 @@ public class AliyunOssTemplate implements OssTemplate {
      * @return 文件名
      */
     private String getFileName(String originalFilename) {
-        return "upload" + File.separator + LocalDate.now() + File.separator + UUID.randomUUID() + "." + Utils.fileExt(originalFilename);
+        return "upload/" + LocalDate.now() + "/" + UUID.randomUUID().toString().replace("-", "") + "." + Utils.fileExt(originalFilename);
     }
 }

@@ -156,7 +156,7 @@ public class MinIoTemplate implements OssTemplate {
      */
     @Override
     public String getFilePath(String fileName) {
-        return getBucketName().concat(File.separator)
+        return getBucketName().concat("/")
                 .concat(fileName);
     }
 
@@ -169,7 +169,7 @@ public class MinIoTemplate implements OssTemplate {
      */
     @Override
     public String getFilePath(String bucketName, String fileName) {
-        return bucketName.concat(File.separator)
+        return bucketName.concat("/")
                 .concat(fileName);
     }
 
@@ -183,9 +183,9 @@ public class MinIoTemplate implements OssTemplate {
     public String getFileLink(String fileName) {
         return ossProperties.getMinIo()
                 .getEndpoint()
-                .concat(File.separator)
+                .concat("/")
                 .concat(getBucketName())
-                .concat(File.separator)
+                .concat("/")
                 .concat(fileName);
     }
 
@@ -200,9 +200,9 @@ public class MinIoTemplate implements OssTemplate {
     public String getFileLink(String bucketName, String fileName) {
         return ossProperties.getMinIo()
                 .getEndpoint()
-                .concat(File.separator)
+                .concat("/")
                 .concat(bucketName)
-                .concat(File.separator)
+                .concat("/")
                 .concat(fileName);
     }
 
@@ -444,6 +444,6 @@ public class MinIoTemplate implements OssTemplate {
      * @return 文件名
      */
     private String getFileName(String originalFilename) {
-        return "upload" + File.separator + LocalDate.now() + File.separator + UUID.randomUUID() + "." + Utils.fileExt(originalFilename);
+        return "upload/" + LocalDate.now() + "/" + UUID.randomUUID().toString().replace("-", "") + "." + Utils.fileExt(originalFilename);
     }
 }

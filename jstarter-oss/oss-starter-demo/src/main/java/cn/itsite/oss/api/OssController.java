@@ -1,6 +1,7 @@
 package cn.itsite.oss.api;
 
 import cn.itsite.oss.DefaultOssTemplate;
+import cn.itsite.oss.model.OssFile;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -26,11 +27,18 @@ public class OssController {
     public Object getImage() {
         defaultOssTemplate.bucketExists("111");
         return "";
-
     }
 
     @PostMapping("/images")
     public Object postImage(@RequestParam("file") MultipartFile file) {
+        OssFile ossFile = defaultOssTemplate.uploadFile(file);
+        return ossFile.getLink();
+    }
+
+    @DeleteMapping("/images")
+    public Object postImage(String key) {
+        log.info("postImage");
+        defaultOssTemplate.deleteFile(key);
         return "";
     }
 }
