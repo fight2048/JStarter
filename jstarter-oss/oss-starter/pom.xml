@@ -5,14 +5,18 @@
 
     <groupId>cn.itsite</groupId>
     <artifactId>oss-starter</artifactId>
-    <version>0.0.9-SNAPSHOT</version>
+    <version>0.0.1-SNAPSHOT</version>
     <name>${project.artifactId}</name>
     <packaging>jar</packaging>
-
     <url>https://github.com/leguang</url>
-    <description>
-        集成多种对象存储，包括:七牛云bucket、阿里云OSS、腾讯云COS、minio
-    </description>
+    <description>集成多种对象存储，包括:七牛云bucket、阿里云OSS、腾讯云COS、minio</description>
+
+    <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>2.1.0.RELEASE</version>
+        <relativePath/> <!-- lookup parent from repository -->
+    </parent>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>

@@ -5,135 +5,20 @@
 
     <groupId>cn.itsite</groupId>
     <artifactId>jstarter-oss</artifactId>
-    <name>${project.artifactId}</name>
     <version>0.0.1-SNAPSHOT</version>
+    <name>${project.artifactId}</name>
     <packaging>pom</packaging>
-
     <url>https://github.com/leguang</url>
-    <description>
-        集成多种对象存储，包括:七牛云bucket、阿里云OSS、腾讯云COS、minio
-    </description>
+    <description>集成多种对象存储，包括:七牛云bucket、阿里云OSS、腾讯云COS、minio</description>
 
     <modules>
         <module>oss-starter</module>
-        <module>oss-starter-api</module>
+        <module>oss-starter-demo</module>
     </modules>
-
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <java.version>1.8</java.version>
-        <official.site>http://itsite.cn</official.site>
-
-        <aliyun.oss.version>3.8.0</aliyun.oss.version>
-        <qcloud.oss.version>5.6.8</qcloud.oss.version>
-        <qiniu.oss.version>7.2.23</qiniu.oss.version>
-        <minio.oss.version>6.0.7</minio.oss.version>
     </properties>
-
-    <dependencyManagement>
-        <dependencies>
-            <!-- lombok -->
-            <dependency>
-                <groupId>org.projectlombok</groupId>
-                <artifactId>lombok</artifactId>
-                <version>1.16.12</version>
-                <scope>provided</scope>
-            </dependency>
-
-            <!-- 阿里云OSS -->
-            <dependency>
-                <groupId>com.aliyun.oss</groupId>
-                <artifactId>aliyun-sdk-oss</artifactId>
-                <version>${aliyun.oss.version}</version>
-                <scope>provided</scope>
-            </dependency>
-
-            <!-- COS-->
-            <dependency>
-                <groupId>com.qcloud</groupId>
-                <artifactId>cos_api</artifactId>
-                <version>${qcloud.oss.version}</version>
-                <scope>provided</scope>
-            </dependency>
-
-            <!-- QiNiu -->
-            <dependency>
-                <groupId>com.qiniu</groupId>
-                <artifactId>qiniu-java-sdk</artifactId>
-                <version>${qiniu.oss.version}</version>
-                <scope>provided</scope>
-            </dependency>
-
-            <!-- MinIO -->
-            <dependency>
-                <groupId>io.minio</groupId>
-                <artifactId>minio</artifactId>
-                <version>${minio.oss.version}</version>
-                <scope>provided</scope>
-            </dependency>
-
-        </dependencies>
-    </dependencyManagement>
-
-    <dependencies>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-web</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-test</artifactId>
-            <scope>test</scope>
-        </dependency>
-
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-autoconfigure-processor</artifactId>
-            <optional>true</optional>
-        </dependency>
-
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-configuration-processor</artifactId>
-            <optional>true</optional>
-        </dependency>
-
-        <!-- lombok -->
-        <dependency>
-            <groupId>org.projectlombok</groupId>
-            <artifactId>lombok</artifactId>
-        </dependency>
-
-        <!--阿里云OSS-->
-        <dependency>
-            <groupId>com.aliyun.oss</groupId>
-            <artifactId>aliyun-sdk-oss</artifactId>
-            <scope>provided</scope>
-        </dependency>
-
-        <!-- COS-->
-        <dependency>
-            <groupId>com.qcloud</groupId>
-            <artifactId>cos_api</artifactId>
-            <scope>provided</scope>
-        </dependency>
-
-        <!-- QiNiu -->
-        <dependency>
-            <groupId>com.qiniu</groupId>
-            <artifactId>qiniu-java-sdk</artifactId>
-            <scope>provided</scope>
-        </dependency>
-
-        <!-- MinIO -->
-        <dependency>
-            <groupId>io.minio</groupId>
-            <artifactId>minio</artifactId>
-            <scope>provided</scope>
-        </dependency>
-    </dependencies>
-
 </project>
