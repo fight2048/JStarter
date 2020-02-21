@@ -1,4 +1,4 @@
-<h1 align="center"><a href="https://github.com/xkcoding/magic-starter/tree/master/magic-starter-oss" target="_blank">magic-starter-oss</a></h1>
+<h1 align="center"><a href="https://github.com/xkcoding/magic-starter/tree/master/magic-starter-oss" target="_blank">oss-starter</a></h1>
 <p align="center">
 <a href="https://travis-ci.com/xkcoding/magic-starter" target="_blank"><img alt="Travis-CI" src="https://travis-ci.com/xkcoding/magic-starter.svg?branch=master"/></a>
   <a href="https://search.maven.org/artifact/com.xkcoding/magic-starter-oss" target="_blank"><img alt="MAVEN" src="https://img.shields.io/maven-central/v/com.xkcoding/magic-starter-oss.svg?color=brightgreen&label=Maven%20Central"></a>
@@ -11,28 +11,26 @@
 
 ## 简介
 
-`magic-starter-oss` 主要是对一些常用的对象存储的封装，支持`阿里云OSS、腾讯云COS、七牛云存储、MinIO`。
+`oss-starter` 主要是对一些常用的对象存储的封装，支持`阿里云OSS、腾讯云COS、七牛云存储、MinIO`。
 
 ## 使用
 
 ```xml
 <dependency>
-  <groupId>com.xkcoding</groupId>
-  <artifactId>magic-starter-oss</artifactId>
-  <version>${magic-starter.version}</version>
+     <groupId>cn.itsite</groupId>
+     <artifactId>oss-starter</artifactId>
+     <version>0.0.1-SNAPSHOT</version>
 </dependency>
 ```
 
 ## 快速上手
 
-> magic-starter-oss 提供了 4 种常见的对象云存储的支持。
->
-> 1. 阿里云 OSS
-> 2. 腾讯云 COS
-> 3. 七牛云存储
-> 4. MinIO 自建
->
-> 懒人请直接看demo：https://github.com/xkcoding/magic-starter-oss-demo
+oss-starter 提供了 4 种常见的对象云存储的支持。
+1. 阿里云 OSS
+2. 腾讯云 COS
+3. 七牛云存储
+4. MinIO 自建
+
 
 ### 配置
 
@@ -51,15 +49,14 @@
 ##### 配置文件
 
 ```yaml
-magic:
-  oss:
-    ali-oss:
-      enabled: true
-      access-key: LTA**************WHXtC
-      secret-key: PQw*************************r3
-      endpoint: oss-cn-hangzhou.aliyuncs.com
-      bucket-name: test
-      https: true
+oss:
+  ali-oss:
+    enabled: true
+    access-key: **************
+    secret-key: *************
+    endpoint: oss-cn-hangzhou.aliyuncs.com
+    bucket-name: test
+    https: true
 ```
 
 #### 腾讯云 COS
@@ -81,9 +78,9 @@ magic:
   oss:
     tencent-cos:
       enabled: true
-      app-id: 125****51
-      access-key: AK****************************at1pg
-      secret-key: npJ****************************nqz
+      app-id: ****
+      access-key: ******************
+      secret-key: **************
       bucket-name: test
       region: ap-shanghai
       https: true
@@ -108,10 +105,10 @@ magic:
   oss:
     qiniu-cloud:
       enabled: true
-      access-key: 9Qx*****************9jtENhZ-sTGV**********f5Rd
-      secret-key: 8izWd*****************************Ccgd
+      access-key: ***********
+      secret-key: *****************
       bucket-name: test
-      endpoint: http://q3**********cho.bkt.clouddn.com
+      endpoint: http://*****.bkt.clouddn.com
       region: z0
 ```
 
@@ -141,6 +138,15 @@ magic:
 ```
 
 ### 使用
+
+#### 默认（推荐）
+
+使用`DefaultOssTemplate`作为注入对象，相当于策略模式，在配置文件中进行配置`enabled: true`即可表达使用的哪种OSS。
+
+```java
+@Autowired
+private DefaultOssTemplate defaultOssTemplate;
+```
 
 #### 阿里云 OSS
 
@@ -172,6 +178,5 @@ private MinIoTemplate minIoTemplate;
 
 ## 特点
 
-- 提供了存储桶生成策略、及文件名生成策略，用户自定义只需要自定义 `com.xkcoding.magic.oss.support.rule.OssRule`，同时加入到 Spring 容器中即可
-- 提供了统一的操作接口，`com.xkcoding.magic.oss.OssTemplate` 后续集成其他对象存储，只需要实现该接口即可
-- 虽然有 4 种实现，但是对外暴露的 API 一致，减去记忆的烦恼
+- 可以自定义bucketName及文件名
+- 提供了统一的操作接口，`OssTemplate` 后续集成其他对象存储，只需要实现该接口即可
