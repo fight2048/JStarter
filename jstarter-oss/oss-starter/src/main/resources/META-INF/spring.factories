@@ -1,0 +1,6 @@
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+cn.itsite.oss.autoconfigure.aliyun.AliyunOssAutoConfiguration,\
+cn.itsite.oss.autoconfigure.minio.MinIoAutoConfiguration,\
+cn.itsite.oss.autoconfigure.qcloud.QCloudCosAutoConfiguration,\
+cn.itsite.oss.autoconfigure.qiniu.QiniuCloudAutoConfiguration,\
+cn.itsite.oss.autoconfigure.OssAutoConfiguration

@@ -1,0 +1,16 @@
+spring:
+  output:
+    ansi:
+      enabled: ALWAYS
+server:
+  port: 8011
+
+oss:
+  aliyun-oss:
+    access-key: LTA**************WHXtC
+    secret-key: PQw*************************r3
+    endpoint: oss-cn-hangzhou.aliyuncs.com
+    bucket-name: test
+    https: false
+    enabled: true
+
