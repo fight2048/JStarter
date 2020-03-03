@@ -28,4 +28,4 @@
 target
 generatorConfig.xml
 
-application.yml
+/jstarter-oss/oss-starter-demo/src/main/resources/application.yml
