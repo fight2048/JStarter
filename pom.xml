@@ -6,7 +6,6 @@
     <groupId>cn.itsite</groupId>
     <artifactId>jstarter</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <url>${official.site}</url>
     <packaging>pom</packaging>
     <name>JStarter</name>
     <description>JStarter Rapid development framework</description>

@@ -36,7 +36,7 @@ import java.time.LocalDate;
 import java.util.*;
 
 /**
- * 阿里云 OSS 操作，参考文档：https://help.aliyun.com/document_detail/31947.html?spm=a2c4g.11186623.3.2.fbba69cbWx4YuF
+ * 阿里云 OSS 操作，参考文档：https://help.aliyun.com/document_detail/31947.html
  */
 @Slf4j
 public class AliyunOssTemplate implements OssTemplate {
