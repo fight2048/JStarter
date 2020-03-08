@@ -1,9 +1,0 @@
-oss:
-  aliyun-oss:
-    access-key: LTAI4FfXbPZstemB9VzirwrC
-    secret-key: u6dPlvYKAEYO1rS8eiHh9AUi92q2IW
-    endpoint: oss-cn-shenzhen.aliyuncs.com
-    bucket-name: turing-cloud-test
-    https: true
-    enabled: true
-s
