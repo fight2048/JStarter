@@ -29,3 +29,4 @@ target
 generatorConfig.xml
 
 /jstarter-oss/oss-starter-demo/src/main/resources/application-dev.yml
+/jstarter-email/email-starter-demo/src/main/resources/application-dev.yml

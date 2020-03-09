@@ -41,7 +41,7 @@ public class AliyunOssAutoConfiguration {
         // 设置失败请求重试次数，默认为3次。
         config.setMaxErrorRetry(5);
         // 配置协议
-        OssProperties.AliYunOssProperties properties = ossProperties.getAliyunOss();
+        OssProperties.AliyunOssProperties properties = ossProperties.getAliyunOss();
         config.setProtocol(properties.getHttps() ? Protocol.HTTPS : Protocol.HTTP);
 
         return (OSSClient) new OSSClientBuilder()

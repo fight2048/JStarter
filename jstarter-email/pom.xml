@@ -4,16 +4,16 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>cn.itsite</groupId>
-    <artifactId>jstarter-oss</artifactId>
+    <artifactId>jstarter-email</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>${project.artifactId}</name>
     <packaging>pom</packaging>
     <url>https://github.com/leguang</url>
-    <description>集成多种对象存储，包括:七牛云bucket、阿里云OSS、腾讯云COS、minio</description>
+    <description>集成邮件发送功能，包括阿里云SDK发送功能</description>
 
     <modules>
-        <module>oss-starter</module>
-        <module>oss-starter-demo</module>
+        <module>email-starter</module>
+        <module>email-starter-demo</module>
     </modules>
 
     <properties>

@@ -13,7 +13,7 @@ public class OssProperties {
     /**
      * 阿里云 OSS
      */
-    private AliYunOssProperties aliyunOss = new AliYunOssProperties();
+    private AliyunOssProperties aliyunOss = new AliyunOssProperties();
     /**
      * 腾讯云 COS
      */
@@ -32,7 +32,7 @@ public class OssProperties {
      */
     @Data
     @EqualsAndHashCode(callSuper = true)
-    public static class AliYunOssProperties extends CommonProperties {
+    public static class AliyunOssProperties extends CommonProperties {
         /**
          * 是否使用 https
          */
