@@ -1,4 +1,4 @@
-package cn.itsite.oss.autoconfigure;
+package cn.itsite.email.autoconfigure;
 
 import com.aliyuncs.dm.model.v20151123.SingleSendMailRequest;
 import lombok.extern.slf4j.Slf4j;

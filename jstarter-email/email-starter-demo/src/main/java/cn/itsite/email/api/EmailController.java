@@ -1,6 +1,6 @@
-package cn.itsite.oss.api;
+package cn.itsite.email.api;
 
-import cn.itsite.oss.autoconfigure.AliyunEamilTemplate;
+import cn.itsite.email.autoconfigure.AliyunEamilTemplate;
 import com.aliyuncs.dm.model.v20151123.SingleSendMailRequest;
 import com.aliyuncs.dm.model.v20151123.SingleSendMailResponse;
 import com.aliyuncs.exceptions.ClientException;

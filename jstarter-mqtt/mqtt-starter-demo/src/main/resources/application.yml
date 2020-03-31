@@ -1,0 +1,15 @@
+server:
+  port: 8011
+
+mqtt:
+  username:
+  password:
+  keepAliveInterval: 60
+  connectionTimeout: 7200
+  urls: tcp://127.0.0.1:1883
+  inbound:
+    clientId: client-inbound
+    topics: topic/#
+  outbound:
+    clientId: client-outbound
+    topics: topic1

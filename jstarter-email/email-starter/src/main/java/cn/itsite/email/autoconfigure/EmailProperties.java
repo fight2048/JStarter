@@ -1,4 +1,4 @@
-package cn.itsite.oss.autoconfigure;
+package cn.itsite.email.autoconfigure;
 
 import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;

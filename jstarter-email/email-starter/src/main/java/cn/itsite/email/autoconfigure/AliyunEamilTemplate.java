@@ -1,4 +1,4 @@
-package cn.itsite.oss.autoconfigure;
+package cn.itsite.email.autoconfigure;
 
 import com.aliyuncs.DefaultAcsClient;
 import com.aliyuncs.IAcsClient;
