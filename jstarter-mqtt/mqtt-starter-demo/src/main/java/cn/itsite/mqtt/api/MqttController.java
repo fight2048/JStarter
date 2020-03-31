@@ -1,5 +1,6 @@
 package cn.itsite.mqtt.api;
 
+import cn.itsite.mqtt.MqttAutoConfguration;
 import cn.itsite.mqtt.MqttGateway;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,7 +8,10 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.integration.annotation.ServiceActivator;
 import org.springframework.integration.mqtt.inbound.MqttPahoMessageDrivenChannelAdapter;
 import org.springframework.messaging.MessageHandler;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 /**
  * @author: leguang
@@ -51,7 +55,7 @@ public class MqttController {
     }
 
     @Bean
-    @ServiceActivator(inputChannel = "inputChannel")
+    @ServiceActivator(inputChannel = MqttAutoConfguration.CHANNEL_INPUT)
     public MessageHandler handler() {
         return message -> {
             log.info("handler--message-->" + message.getPayload());

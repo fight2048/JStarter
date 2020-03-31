@@ -29,6 +29,8 @@ import org.springframework.messaging.MessageHandler;
 @Configuration
 @EnableConfigurationProperties(MqttProperties.class)
 public class MqttAutoConfguration {
+    public static final String CHANNEL_OUTPUT = "outputChannel";
+    public static final String CHANNEL_INPUT = "inputChannel";
 
     @Autowired
     private MqttProperties mqttProperties;
@@ -56,13 +58,13 @@ public class MqttAutoConfguration {
         return factory;
     }
 
-    @Bean
+    @Bean(name = CHANNEL_OUTPUT)
     public MessageChannel outputChannel() {
         return new DirectChannel();
     }
 
     @Bean
-    @ServiceActivator(inputChannel = "outputChannel")
+    @ServiceActivator(inputChannel = CHANNEL_OUTPUT)
     public MessageHandler outbound(MqttPahoClientFactory mqttPahoClientFactory) {
         MqttProperties.Outbound outbound = mqttProperties.getOutbound();
         MqttPahoMessageHandler messageHandler = new MqttPahoMessageHandler(outbound.getClientId(), mqttPahoClientFactory);
@@ -72,7 +74,7 @@ public class MqttAutoConfguration {
     }
 
     /**********输入通道**********/
-    @Bean
+    @Bean(name = CHANNEL_INPUT)
     public MessageChannel inputChannel() {
         return new DirectChannel();
     }
