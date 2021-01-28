@@ -2,18 +2,16 @@ spring:
   output:
     ansi:
       enabled: ALWAYS
+  mail:
+    host: smtp.qq.com
+    password: 密码  //对于qq邮箱而言 密码指的就是发送方的授权码
+    username: xxx@qq.com  //发送方的邮箱
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+            required: true  注意：在spring.mail.password处的值是需要在邮箱设置里面生成的授权码，这个不是真实的密码。
 server:
   port: 8013
-
-spring:
-    mail:
-        host: smtp.qq.com
-        password: 密码  //对于qq邮箱而言 密码指的就是发送方的授权码
-        username: xxx@qq.com  //发送方的邮箱
-        properties:
-            mail:
-                smtp:
-                    auth: true
-                    starttls:
-                        enable: true
-                        required: true  注意：在spring.mail.password处的值是需要在邮箱设置里面生成的授权码，这个不是真实的密码。
