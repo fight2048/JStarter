@@ -1,7 +1,5 @@
 package cn.itsite.mqtt;
 
-import cn.itsite.mqtt.utils.Utils;
-import lombok.extern.slf4j.Slf4j;
 import org.eclipse.paho.client.mqttv3.MqttConnectOptions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
@@ -16,6 +14,7 @@ import org.springframework.integration.mqtt.outbound.MqttPahoMessageHandler;
 import org.springframework.integration.mqtt.support.DefaultPahoMessageConverter;
 import org.springframework.messaging.MessageChannel;
 import org.springframework.messaging.MessageHandler;
+import org.springframework.util.StringUtils;
 
 /**
  * @author: leguang
@@ -25,7 +24,6 @@ import org.springframework.messaging.MessageHandler;
  * @time: 2019/2/10 0010 23:51
  * @description:
  */
-@Slf4j
 @Configuration
 @EnableConfigurationProperties(MqttProperties.class)
 public class MqttAutoConfguration {
@@ -38,8 +36,8 @@ public class MqttAutoConfguration {
     @Bean
     public MqttConnectOptions mqttConnectOptions() {
         MqttConnectOptions mqttConnectOptions = new MqttConnectOptions();
-        if (!Utils.isEmpty(mqttProperties.getUsername())
-                && !Utils.isEmpty(mqttProperties.getPassword())) {
+        if (!StringUtils.isEmpty(mqttProperties.getUsername())
+                && !StringUtils.isEmpty(mqttProperties.getPassword())) {
             mqttConnectOptions.setUserName(mqttProperties.getUsername());
             mqttConnectOptions.setPassword(mqttProperties.getPassword().toCharArray());
         }

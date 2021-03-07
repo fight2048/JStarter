@@ -1,11 +1,8 @@
 package cn.itsite.oss.autoconfigure;
 
 import cn.itsite.oss.model.Kv;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
-@Data
 @ConfigurationProperties(prefix = OssProperties.OSS_PREFIX)
 public class OssProperties {
     public static final String OSS_PREFIX = "oss";
@@ -27,23 +24,59 @@ public class OssProperties {
      */
     private MinIoProperties minIo = new MinIoProperties();
 
+    public AliyunOssProperties getAliyunOss() {
+        return aliyunOss;
+    }
+
+    public void setAliyunOss(AliyunOssProperties aliyunOss) {
+        this.aliyunOss = aliyunOss;
+    }
+
+    public QcloudCosProperties getQcloudCos() {
+        return qcloudCos;
+    }
+
+    public void setQcloudCos(QcloudCosProperties qcloudCos) {
+        this.qcloudCos = qcloudCos;
+    }
+
+    public QiniuProperties getQiniuCloud() {
+        return qiniuCloud;
+    }
+
+    public void setQiniuCloud(QiniuProperties qiniuCloud) {
+        this.qiniuCloud = qiniuCloud;
+    }
+
+    public MinIoProperties getMinIo() {
+        return minIo;
+    }
+
+    public void setMinIo(MinIoProperties minIo) {
+        this.minIo = minIo;
+    }
+
     /**
      * 阿里云 OSS 配置
      */
-    @Data
-    @EqualsAndHashCode(callSuper = true)
     public static class AliyunOssProperties extends CommonProperties {
         /**
          * 是否使用 https
          */
         private Boolean https = false;
+
+        public Boolean getHttps() {
+            return https;
+        }
+
+        public void setHttps(Boolean https) {
+            this.https = https;
+        }
     }
 
     /**
      * 腾讯云 OSS 配置
      */
-    @Data
-    @EqualsAndHashCode(callSuper = true)
     public static class QcloudCosProperties extends CommonProperties {
         /**
          * App Id
@@ -59,32 +92,59 @@ public class OssProperties {
          * 是否使用 https
          */
         private Boolean https = false;
+
+        public String getAppId() {
+            return appId;
+        }
+
+        public void setAppId(String appId) {
+            this.appId = appId;
+        }
+
+        public String getRegion() {
+            return region;
+        }
+
+        public void setRegion(String region) {
+            this.region = region;
+        }
+
+        public Boolean getHttps() {
+            return https;
+        }
+
+        public void setHttps(Boolean https) {
+            this.https = https;
+        }
     }
 
     /**
      * 七牛云存储配置
      */
-    @Data
-    @EqualsAndHashCode(callSuper = true)
     public static class QiniuProperties extends CommonProperties {
         /**
          * 区域简称，https://developer.qiniu.com/kodo/manual/1671/region-endpoint
          */
         private String region;
+
+        public String getRegion() {
+            return region;
+        }
+
+        public void setRegion(String region) {
+            this.region = region;
+        }
     }
 
     /**
      * MinIO 配置
      */
-    @Data
-    @EqualsAndHashCode(callSuper = true)
     public static class MinIoProperties extends CommonProperties {
     }
 
     /**
      * 通用配置
      */
-    @Data
     public static class CommonProperties {
         /**
          * 是否启用
@@ -115,5 +175,53 @@ public class OssProperties {
          * 自定义属性
          */
         private Kv args;
+
+        public boolean isEnabled() {
+            return enabled;
+        }
+
+        public void setEnabled(boolean enabled) {
+            this.enabled = enabled;
+        }
+
+        public String getEndpoint() {
+            return endpoint;
+        }
+
+        public void setEndpoint(String endpoint) {
+            this.endpoint = endpoint;
+        }
+
+        public String getAccessKey() {
+            return accessKey;
+        }
+
+        public void setAccessKey(String accessKey) {
+            this.accessKey = accessKey;
+        }
+
+        public String getSecretKey() {
+            return secretKey;
+        }
+
+        public void setSecretKey(String secretKey) {
+            this.secretKey = secretKey;
+        }
+
+        public String getBucketName() {
+            return bucketName;
+        }
+
+        public void setBucketName(String bucketName) {
+            this.bucketName = bucketName;
+        }
+
+        public Kv getArgs() {
+            return args;
+        }
+
+        public void setArgs(Kv args) {
+            this.args = args;
+        }
     }
 }

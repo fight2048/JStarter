@@ -5,15 +5,16 @@ import cn.itsite.oss.autoconfigure.OssProperties;
 import cn.itsite.oss.model.OssFile;
 import cn.itsite.oss.model.OssMeta;
 import cn.itsite.oss.utils.Utils;
+import com.qiniu.common.QiniuException;
 import com.qiniu.http.Response;
 import com.qiniu.storage.BucketManager;
 import com.qiniu.storage.UploadManager;
 import com.qiniu.storage.model.AclType;
 import com.qiniu.storage.model.FileInfo;
 import com.qiniu.util.Auth;
-import lombok.SneakyThrows;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.io.InputStream;
 import java.time.LocalDate;
 import java.util.Date;
@@ -42,8 +43,7 @@ public class QiniuCloudTemplate implements OssTemplate {
      * @param bucketName 存储桶名称
      */
     @Override
-    @SneakyThrows
-    public void createBucket(String bucketName) {
+    public void createBucket(String bucketName) throws QiniuException {
         if (!bucketExists(bucketName)) {
             bucketManager.createBucket(bucketName, ossProperties.getQiniuCloud()
                     .getRegion());
@@ -68,8 +68,7 @@ public class QiniuCloudTemplate implements OssTemplate {
      * @return boolean
      */
     @Override
-    @SneakyThrows
-    public boolean bucketExists(String bucketName) {
+    public boolean bucketExists(String bucketName) throws QiniuException {
         final String[] buckets = bucketManager.buckets();
         return Utils.contains(buckets, bucketName);
     }
@@ -82,8 +81,7 @@ public class QiniuCloudTemplate implements OssTemplate {
      * @param targetBucketName 目标存储桶名称
      */
     @Override
-    @SneakyThrows
-    public void copyFile(String sourceBucketName, String fileName, String targetBucketName) {
+    public void copyFile(String sourceBucketName, String fileName, String targetBucketName) throws QiniuException {
         copyFile(sourceBucketName, fileName, targetBucketName, fileName);
     }
 
@@ -96,8 +94,7 @@ public class QiniuCloudTemplate implements OssTemplate {
      * @param targetFileName   目标存储桶文件名称
      */
     @Override
-    @SneakyThrows
-    public void copyFile(String sourceBucketName, String fileName, String targetBucketName, String targetFileName) {
+    public void copyFile(String sourceBucketName, String fileName, String targetBucketName, String targetFileName) throws QiniuException {
         bucketManager.copy(sourceBucketName, fileName, targetBucketName, targetFileName);
     }
 
@@ -108,7 +105,7 @@ public class QiniuCloudTemplate implements OssTemplate {
      * @return 文件元信息
      */
     @Override
-    public OssMeta getFileMetaInfo(String fileName) {
+    public OssMeta getFileMetaInfo(String fileName) throws QiniuException {
         return getFileMetaInfo(ossProperties.getQiniuCloud().getBucketName(), fileName);
     }
 
@@ -120,8 +117,7 @@ public class QiniuCloudTemplate implements OssTemplate {
      * @return 文件元信息
      */
     @Override
-    @SneakyThrows
-    public OssMeta getFileMetaInfo(String bucketName, String fileName) {
+    public OssMeta getFileMetaInfo(String bucketName, String fileName) throws QiniuException {
         final FileInfo fileInfo = bucketManager.stat(bucketName, fileName);
         OssMeta metaInfo = new OssMeta();
         metaInfo.setName(Utils.isBlank(fileInfo.key) ? fileName : fileInfo.key);
@@ -195,7 +191,7 @@ public class QiniuCloudTemplate implements OssTemplate {
      * @return 文件信息
      */
     @Override
-    public OssFile uploadFile(MultipartFile file) {
+    public OssFile uploadFile(MultipartFile file) throws IOException {
         return uploadFile(file.getOriginalFilename(), file);
     }
 
@@ -207,7 +203,7 @@ public class QiniuCloudTemplate implements OssTemplate {
      * @return 文件信息
      */
     @Override
-    public OssFile uploadFile(String fileName, MultipartFile file) {
+    public OssFile uploadFile(String fileName, MultipartFile file) throws IOException {
         return uploadFile(ossProperties.getQiniuCloud()
                 .getBucketName(), fileName, file);
     }
@@ -221,8 +217,7 @@ public class QiniuCloudTemplate implements OssTemplate {
      * @return 文件信息
      */
     @Override
-    @SneakyThrows
-    public OssFile uploadFile(String bucketName, String fileName, MultipartFile file) {
+    public OssFile uploadFile(String bucketName, String fileName, MultipartFile file) throws IOException {
         return uploadFile(bucketName, fileName, file.getInputStream());
     }
 
@@ -234,7 +229,7 @@ public class QiniuCloudTemplate implements OssTemplate {
      * @return 文件信息
      */
     @Override
-    public OssFile uploadFile(String fileName, InputStream stream) {
+    public OssFile uploadFile(String fileName, InputStream stream) throws QiniuException {
         return uploadFile(ossProperties.getQiniuCloud()
                 .getBucketName(), fileName, stream);
     }
@@ -248,12 +243,11 @@ public class QiniuCloudTemplate implements OssTemplate {
      * @return 文件信息
      */
     @Override
-    public OssFile uploadFile(String bucketName, String fileName, InputStream stream) {
+    public OssFile uploadFile(String bucketName, String fileName, InputStream stream) throws QiniuException {
         return upload(bucketName, fileName, stream, false);
     }
 
-    @SneakyThrows
-    private OssFile upload(String bucketName, String fileName, InputStream stream, boolean cover) {
+    private OssFile upload(String bucketName, String fileName, InputStream stream, boolean cover) throws QiniuException {
         // 创建存储桶
         createBucket(bucketName);
         // 获取 oss 存储文件名
@@ -285,8 +279,7 @@ public class QiniuCloudTemplate implements OssTemplate {
      * @param fileName 存储桶对象名称
      */
     @Override
-    @SneakyThrows
-    public void deleteFile(String fileName) {
+    public void deleteFile(String fileName) throws QiniuException {
         bucketManager.delete(getBucketName(), fileName);
     }
 
@@ -297,8 +290,7 @@ public class QiniuCloudTemplate implements OssTemplate {
      * @param fileName   存储桶对象名称
      */
     @Override
-    @SneakyThrows
-    public void deleteFile(String bucketName, String fileName) {
+    public void deleteFile(String bucketName, String fileName) throws QiniuException {
         bucketManager.delete(bucketName, fileName);
     }
 
@@ -308,8 +300,14 @@ public class QiniuCloudTemplate implements OssTemplate {
      * @param fileNames 存储桶对象名称集合
      */
     @Override
-    public void deleteFiles(List<String> fileNames) {
-        fileNames.forEach(this::deleteFile);
+    public void deleteFiles(List<String> fileNames) throws QiniuException{
+        fileNames.forEach(fileName -> {
+            try {
+                deleteFile(fileName);
+            } catch (QiniuException e) {
+                e.printStackTrace();
+            }
+        });
     }
 
     /**
@@ -319,8 +317,14 @@ public class QiniuCloudTemplate implements OssTemplate {
      * @param fileNames  存储桶对象名称集合
      */
     @Override
-    public void deleteFiles(String bucketName, List<String> fileNames) {
-        fileNames.forEach(fileName -> deleteFile(bucketName, fileName));
+    public void deleteFiles(String bucketName, List<String> fileNames) throws QiniuException{
+        fileNames.forEach(fileName -> {
+            try {
+                deleteFile(bucketName, fileName);
+            } catch (QiniuException e) {
+                e.printStackTrace();
+            }
+        });
     }
 
     /**

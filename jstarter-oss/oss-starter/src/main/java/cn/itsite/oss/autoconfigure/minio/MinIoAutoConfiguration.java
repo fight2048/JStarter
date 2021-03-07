@@ -5,8 +5,8 @@ import cn.itsite.oss.autoconfigure.OssAutoConfiguration;
 import cn.itsite.oss.autoconfigure.OssProperties;
 import cn.itsite.oss.support.minio.MinIoTemplate;
 import io.minio.MinioClient;
-import lombok.SneakyThrows;
-import lombok.extern.slf4j.Slf4j;
+import io.minio.errors.InvalidEndpointException;
+import io.minio.errors.InvalidPortException;
 import org.springframework.boot.autoconfigure.AutoConfigureBefore;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
@@ -15,7 +15,6 @@ import org.springframework.boot.context.properties.EnableConfigurationProperties
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-@Slf4j
 @Configuration
 @AutoConfigureBefore(OssAutoConfiguration.class)
 @EnableConfigurationProperties(OssProperties.class)
@@ -23,9 +22,8 @@ import org.springframework.context.annotation.Configuration;
 public class MinIoAutoConfiguration {
 
     @Bean
-    @SneakyThrows
     @ConditionalOnMissingBean
-    public MinioClient minioClient(OssProperties ossProperties) {
+    public MinioClient minioClient(OssProperties ossProperties) throws InvalidPortException, InvalidEndpointException {
         OssProperties.MinIoProperties properties = ossProperties.getMinIo();
         return new MinioClient(properties.getEndpoint(),
                 properties.getAccessKey(),

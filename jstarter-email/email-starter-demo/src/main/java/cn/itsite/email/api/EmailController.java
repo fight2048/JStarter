@@ -20,7 +20,6 @@ import org.springframework.web.bind.annotation.RestController;
  * @time: 2019/10/24/0024 0:25
  * @description:
  */
-@Slf4j
 @RestController
 public class EmailController {
     @Autowired

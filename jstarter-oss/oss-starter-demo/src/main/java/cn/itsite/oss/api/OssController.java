@@ -2,10 +2,16 @@ package cn.itsite.oss.api;
 
 import cn.itsite.oss.DefaultOssTemplate;
 import cn.itsite.oss.model.OssFile;
+import io.minio.errors.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import org.xmlpull.v1.XmlPullParserException;
+
+import java.io.IOException;
+import java.security.InvalidKeyException;
+import java.security.NoSuchAlgorithmException;
 
 /**
  * @author: leguang
@@ -24,19 +30,19 @@ public class OssController {
     DefaultOssTemplate defaultOssTemplate;
 
     @GetMapping("/images")
-    public Object getImage() {
+    public Object getImage() throws IOException, InvalidKeyException, NoSuchAlgorithmException, XmlPullParserException, InternalException, NoResponseException, InvalidBucketNameException, InsufficientDataException, ErrorResponseException {
         defaultOssTemplate.bucketExists("111");
         return "";
     }
 
     @PostMapping("/images")
-    public Object postImage(@RequestParam("file") MultipartFile file) {
+    public Object postImage(@RequestParam("file") MultipartFile file) throws IOException, InvalidKeyException, NoSuchAlgorithmException, XmlPullParserException, InvalidArgumentException, InternalException, InvalidObjectPrefixException, NoResponseException, InvalidBucketNameException, InsufficientDataException, ErrorResponseException, RegionConflictException {
         OssFile ossFile = defaultOssTemplate.uploadFile(file);
         return ossFile.getLink();
     }
 
     @DeleteMapping("/images")
-    public Object postImage(String key) {
+    public Object postImage(String key) throws IOException, InvalidKeyException, NoSuchAlgorithmException, XmlPullParserException, InvalidArgumentException, InternalException, NoResponseException, InvalidBucketNameException, InsufficientDataException, ErrorResponseException {
         log.info("postImage");
         defaultOssTemplate.deleteFile(key);
         return "";

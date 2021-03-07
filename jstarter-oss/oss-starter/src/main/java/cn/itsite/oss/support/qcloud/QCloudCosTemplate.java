@@ -1,19 +1,3 @@
-/*
- * Copyright (c) 2019-2029, xkcoding & Yangkai.Shen & 沈扬凯 (237497819@qq.com & xkcoding.com).
- * <p>
- * Licensed under the GNU LESSER GENERAL PUBLIC LICENSE 3.0;
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- * <p>
- * http://www.gnu.org/licenses/lgpl.html
- * <p>
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package cn.itsite.oss.support.qcloud;
 
 import cn.itsite.oss.OssTemplate;
@@ -25,10 +9,9 @@ import com.qcloud.cos.COSClient;
 import com.qcloud.cos.model.CannedAccessControlList;
 import com.qcloud.cos.model.ObjectMetadata;
 import com.qcloud.cos.model.PutObjectResult;
-import lombok.SneakyThrows;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.File;
+import java.io.IOException;
 import java.io.InputStream;
 import java.time.LocalDate;
 import java.util.List;
@@ -237,7 +220,7 @@ public class QCloudCosTemplate implements OssTemplate {
      * @return 文件信息
      */
     @Override
-    public OssFile uploadFile(MultipartFile file) {
+    public OssFile uploadFile(MultipartFile file) throws IOException {
         return uploadFile(file.getOriginalFilename(), file);
     }
 
@@ -249,7 +232,7 @@ public class QCloudCosTemplate implements OssTemplate {
      * @return 文件信息
      */
     @Override
-    public OssFile uploadFile(String fileName, MultipartFile file) {
+    public OssFile uploadFile(String fileName, MultipartFile file) throws IOException {
         return uploadFile(ossProperties.getAliyunOss()
                 .getBucketName(), fileName, file);
     }
@@ -263,8 +246,7 @@ public class QCloudCosTemplate implements OssTemplate {
      * @return 文件信息
      */
     @Override
-    @SneakyThrows
-    public OssFile uploadFile(String bucketName, String fileName, MultipartFile file) {
+    public OssFile uploadFile(String bucketName, String fileName, MultipartFile file) throws IOException {
         return uploadFile(bucketName, fileName, file.getInputStream());
     }
 

@@ -1,19 +1,3 @@
-/*
- * Copyright (c) 2019-2029, xkcoding & Yangkai.Shen & 沈扬凯 (237497819@qq.com & xkcoding.com).
- * <p>
- * Licensed under the GNU LESSER GENERAL PUBLIC LICENSE 3.0;
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- * <p>
- * http://www.gnu.org/licenses/lgpl.html
- * <p>
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package cn.itsite.oss.support.minio;
 
 import cn.itsite.oss.OssTemplate;
@@ -24,11 +8,14 @@ import cn.itsite.oss.support.minio.enums.PolicyType;
 import cn.itsite.oss.utils.Utils;
 import io.minio.MinioClient;
 import io.minio.ObjectStat;
-import lombok.SneakyThrows;
+import io.minio.errors.*;
 import org.springframework.web.multipart.MultipartFile;
+import org.xmlpull.v1.XmlPullParserException;
 
-import java.io.File;
+import java.io.IOException;
 import java.io.InputStream;
+import java.security.InvalidKeyException;
+import java.security.NoSuchAlgorithmException;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.UUID;
@@ -56,8 +43,7 @@ public class MinIoTemplate implements OssTemplate {
      * @param bucketName 存储桶名称
      */
     @Override
-    @SneakyThrows
-    public void createBucket(String bucketName) {
+    public void createBucket(String bucketName) throws IOException, InvalidKeyException, NoSuchAlgorithmException, InsufficientDataException, ErrorResponseException, NoResponseException, InvalidBucketNameException, XmlPullParserException, InternalException, RegionConflictException, InvalidObjectPrefixException {
         if (!bucketExists(bucketName)) {
             minioClient.makeBucket(bucketName);
             minioClient.setBucketPolicy(bucketName, getPolicyType(bucketName, PolicyType.READ));
@@ -70,8 +56,7 @@ public class MinIoTemplate implements OssTemplate {
      * @param bucketName 存储桶名称
      */
     @Override
-    @SneakyThrows
-    public void deleteBucket(String bucketName) {
+    public void deleteBucket(String bucketName) throws IOException, InvalidKeyException, NoSuchAlgorithmException, InsufficientDataException, InternalException, NoResponseException, InvalidBucketNameException, XmlPullParserException, ErrorResponseException {
         if (bucketExists(bucketName)) {
             minioClient.removeBucket(bucketName);
         }
@@ -84,8 +69,7 @@ public class MinIoTemplate implements OssTemplate {
      * @return boolean
      */
     @Override
-    @SneakyThrows
-    public boolean bucketExists(String bucketName) {
+    public boolean bucketExists(String bucketName) throws IOException, InvalidKeyException, NoSuchAlgorithmException, InsufficientDataException, InternalException, NoResponseException, InvalidBucketNameException, XmlPullParserException, ErrorResponseException {
         return minioClient.bucketExists(bucketName);
     }
 
@@ -97,7 +81,7 @@ public class MinIoTemplate implements OssTemplate {
      * @param targetBucketName 目标存储桶名称
      */
     @Override
-    public void copyFile(String sourceBucketName, String fileName, String targetBucketName) {
+    public void copyFile(String sourceBucketName, String fileName, String targetBucketName) throws IOException, InvalidKeyException, NoSuchAlgorithmException, XmlPullParserException, InvalidArgumentException, ErrorResponseException, NoResponseException, InvalidBucketNameException, InsufficientDataException, InternalException {
         copyFile(sourceBucketName, fileName, targetBucketName, fileName);
     }
 
@@ -110,8 +94,7 @@ public class MinIoTemplate implements OssTemplate {
      * @param targetFileName   目标存储桶文件名称
      */
     @Override
-    @SneakyThrows
-    public void copyFile(String sourceBucketName, String fileName, String targetBucketName, String targetFileName) {
+    public void copyFile(String sourceBucketName, String fileName, String targetBucketName, String targetFileName) throws IOException, XmlPullParserException, NoSuchAlgorithmException, InvalidKeyException, InvalidArgumentException, InternalException, NoResponseException, InvalidBucketNameException, InsufficientDataException, ErrorResponseException {
         minioClient.copyObject(sourceBucketName, fileName, targetBucketName, targetFileName);
     }
 
@@ -122,7 +105,7 @@ public class MinIoTemplate implements OssTemplate {
      * @return 文件元信息
      */
     @Override
-    public OssMeta getFileMetaInfo(String fileName) {
+    public OssMeta getFileMetaInfo(String fileName) throws IOException, XmlPullParserException, NoSuchAlgorithmException, InvalidKeyException, ErrorResponseException, NoResponseException, InvalidBucketNameException, InsufficientDataException, InternalException {
         return getFileMetaInfo(ossProperties.getMinIo()
                 .getBucketName(), fileName);
     }
@@ -135,8 +118,7 @@ public class MinIoTemplate implements OssTemplate {
      * @return 文件元信息
      */
     @Override
-    @SneakyThrows
-    public OssMeta getFileMetaInfo(String bucketName, String fileName) {
+    public OssMeta getFileMetaInfo(String bucketName, String fileName) throws IOException, InvalidKeyException, NoSuchAlgorithmException, InsufficientDataException, InternalException, NoResponseException, InvalidBucketNameException, XmlPullParserException, ErrorResponseException {
         final ObjectStat objectStat = minioClient.statObject(bucketName, fileName);
         OssMeta metaInfo = new OssMeta();
         metaInfo.setName(Utils.isBlank(objectStat.name()) ? fileName : objectStat.name());
@@ -213,7 +195,7 @@ public class MinIoTemplate implements OssTemplate {
      * @return 文件信息
      */
     @Override
-    public OssFile uploadFile(MultipartFile file) {
+    public OssFile uploadFile(MultipartFile file) throws IOException, InvalidKeyException, NoSuchAlgorithmException, XmlPullParserException, InvalidArgumentException, InternalException, InvalidObjectPrefixException, NoResponseException, InvalidBucketNameException, InsufficientDataException, ErrorResponseException, RegionConflictException {
         return uploadFile(file.getOriginalFilename(), file);
     }
 
@@ -225,7 +207,7 @@ public class MinIoTemplate implements OssTemplate {
      * @return 文件信息
      */
     @Override
-    public OssFile uploadFile(String fileName, MultipartFile file) {
+    public OssFile uploadFile(String fileName, MultipartFile file) throws IOException, XmlPullParserException, NoSuchAlgorithmException, RegionConflictException, InvalidKeyException, InvalidArgumentException, InvalidObjectPrefixException, NoResponseException, InvalidBucketNameException, InsufficientDataException, ErrorResponseException, InternalException {
         return uploadFile(ossProperties.getMinIo()
                 .getBucketName(), fileName, file);
     }
@@ -239,8 +221,7 @@ public class MinIoTemplate implements OssTemplate {
      * @return 文件信息
      */
     @Override
-    @SneakyThrows
-    public OssFile uploadFile(String bucketName, String fileName, MultipartFile file) {
+    public OssFile uploadFile(String bucketName, String fileName, MultipartFile file) throws IOException, InvalidKeyException, NoSuchAlgorithmException, XmlPullParserException, InvalidArgumentException, InvalidBucketNameException, InvalidObjectPrefixException, InternalException, NoResponseException, InsufficientDataException, ErrorResponseException, RegionConflictException {
         return uploadFile(bucketName, fileName, file.getInputStream());
     }
 
@@ -252,7 +233,7 @@ public class MinIoTemplate implements OssTemplate {
      * @return 文件信息
      */
     @Override
-    public OssFile uploadFile(String fileName, InputStream stream) {
+    public OssFile uploadFile(String fileName, InputStream stream) throws IOException, InvalidKeyException, NoSuchAlgorithmException, XmlPullParserException, InvalidArgumentException, InvalidBucketNameException, InvalidObjectPrefixException, InternalException, NoResponseException, InsufficientDataException, ErrorResponseException, RegionConflictException {
         return uploadFile(ossProperties.getMinIo()
                 .getBucketName(), fileName, stream);
     }
@@ -266,8 +247,7 @@ public class MinIoTemplate implements OssTemplate {
      * @return 文件信息
      */
     @Override
-    @SneakyThrows
-    public OssFile uploadFile(String bucketName, String fileName, InputStream stream) {
+    public OssFile uploadFile(String bucketName, String fileName, InputStream stream) throws IOException, XmlPullParserException, NoSuchAlgorithmException, RegionConflictException, InvalidObjectPrefixException, InvalidKeyException, InternalException, NoResponseException, InvalidBucketNameException, InsufficientDataException, ErrorResponseException, InvalidArgumentException {
         // 创建存储桶
         createBucket(bucketName);
         // 获取 oss 存储文件名
@@ -294,8 +274,7 @@ public class MinIoTemplate implements OssTemplate {
      * @param fileName 存储桶对象名称
      */
     @Override
-    @SneakyThrows
-    public void deleteFile(String fileName) {
+    public void deleteFile(String fileName) throws IOException, InvalidKeyException, NoSuchAlgorithmException, InsufficientDataException, InvalidArgumentException, InternalException, NoResponseException, InvalidBucketNameException, XmlPullParserException, ErrorResponseException {
         minioClient.removeObject(getBucketName(), fileName);
     }
 
@@ -306,8 +285,7 @@ public class MinIoTemplate implements OssTemplate {
      * @param fileName   存储桶对象名称
      */
     @Override
-    @SneakyThrows
-    public void deleteFile(String bucketName, String fileName) {
+    public void deleteFile(String bucketName, String fileName) throws IOException, InvalidKeyException, NoSuchAlgorithmException, InsufficientDataException, InvalidArgumentException, InternalException, NoResponseException, InvalidBucketNameException, XmlPullParserException, ErrorResponseException {
         minioClient.removeObject(bucketName, fileName);
     }
 

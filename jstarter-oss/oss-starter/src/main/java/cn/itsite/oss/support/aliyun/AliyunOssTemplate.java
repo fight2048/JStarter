@@ -1,19 +1,3 @@
-/*
- * Copyright (c) 2019-2029, xkcoding & Yangkai.Shen & 沈扬凯 (237497819@qq.com & xkcoding.com).
- * <p>
- * Licensed under the GNU LESSER GENERAL PUBLIC LICENSE 3.0;
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- * <p>
- * http://www.gnu.org/licenses/lgpl.html
- * <p>
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package cn.itsite.oss.support.aliyun;
 
 import cn.itsite.oss.OssTemplate;
@@ -25,11 +9,9 @@ import com.aliyun.oss.OSSClient;
 import com.aliyun.oss.common.utils.BinaryUtil;
 import com.aliyun.oss.model.*;
 import com.google.gson.Gson;
-import lombok.SneakyThrows;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.File;
+import java.io.IOException;
 import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
 import java.time.LocalDate;
@@ -38,7 +20,6 @@ import java.util.*;
 /**
  * 阿里云 OSS 操作，参考文档：https://help.aliyun.com/document_detail/31947.html
  */
-@Slf4j
 public class AliyunOssTemplate implements OssTemplate {
     private final OSSClient ossClient;
     private final OssProperties ossProperties;
@@ -222,7 +203,7 @@ public class AliyunOssTemplate implements OssTemplate {
      * @return 文件信息
      */
     @Override
-    public OssFile uploadFile(MultipartFile file) {
+    public OssFile uploadFile(MultipartFile file) throws IOException {
         return uploadFile(file.getOriginalFilename(), file);
     }
 
@@ -234,7 +215,7 @@ public class AliyunOssTemplate implements OssTemplate {
      * @return 文件信息
      */
     @Override
-    public OssFile uploadFile(String fileName, MultipartFile file) {
+    public OssFile uploadFile(String fileName, MultipartFile file) throws IOException {
         return uploadFile(ossProperties.getAliyunOss()
                 .getBucketName(), fileName, file);
     }
@@ -248,8 +229,7 @@ public class AliyunOssTemplate implements OssTemplate {
      * @return 文件信息
      */
     @Override
-    @SneakyThrows
-    public OssFile uploadFile(String bucketName, String fileName, MultipartFile file) {
+    public OssFile uploadFile(String bucketName, String fileName, MultipartFile file) throws IOException {
         return uploadFile(bucketName, fileName, file.getInputStream());
     }
 

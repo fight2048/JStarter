@@ -31,14 +31,6 @@
 
     <dependencyManagement>
         <dependencies>
-            <!-- lombok -->
-            <dependency>
-                <groupId>org.projectlombok</groupId>
-                <artifactId>lombok</artifactId>
-                <version>1.16.12</version>
-                <scope>provided</scope>
-            </dependency>
-
             <!-- 阿里云OSS -->
             <dependency>
                 <groupId>com.aliyun.oss</groupId>
@@ -96,12 +88,6 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-configuration-processor</artifactId>
             <optional>true</optional>
-        </dependency>
-
-        <!-- lombok -->
-        <dependency>
-            <groupId>org.projectlombok</groupId>
-            <artifactId>lombok</artifactId>
         </dependency>
 
         <!--阿里云OSS-->
