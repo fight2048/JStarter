@@ -4,9 +4,9 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>cn.itsite</groupId>
+    <groupId>com.fight2048</groupId>
     <artifactId>email-starter-demo</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>0.0.1</version>
     <packaging>jar</packaging>
     <name>${project.artifactId}</name>
     <description>email-starter演示示例</description>
@@ -35,9 +35,9 @@
 
             <!-- 自制 -->
             <dependency>
-                <groupId>cn.itsite</groupId>
+                <groupId>com.fight2048</groupId>
                 <artifactId>email-starter</artifactId>
-                <version>0.0.1-SNAPSHOT</version>
+                <version>0.0.1</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
@@ -62,7 +62,7 @@
 
         <!-- 自制 -->
         <dependency>
-            <groupId>cn.itsite</groupId>
+            <groupId>com.fight2048</groupId>
             <artifactId>email-starter</artifactId>
         </dependency>
     </dependencies>

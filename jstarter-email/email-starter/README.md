@@ -17,9 +17,9 @@
 
 ```xml
 <dependency>
-     <groupId>cn.itsite</groupId>
+     <groupId>com.fight2048</groupId>
      <artifactId>oss-starter</artifactId>
-     <version>0.0.1-SNAPSHOT</version>
+     <version>0.0.1</version>
 </dependency>
 ```
 

@@ -4,12 +4,12 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.fight2048</groupId>
-    <artifactId>oss-starter</artifactId>
+    <artifactId>sms-starter</artifactId>
     <version>0.0.1</version>
     <name>${project.artifactId}</name>
     <packaging>jar</packaging>
     <url>https://github.com/leguang</url>
-    <description>集成多种对象存储，包括:七牛云bucket、阿里云OSS、腾讯云COS、minio</description>
+    <description>集成短信发送功能，包括阿里云SDK发送功能</description>
 
     <parent>
         <groupId>org.springframework.boot</groupId>
@@ -23,46 +23,20 @@
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <java.version>1.8</java.version>
         <official.site>http://itsite.cn</official.site>
-        <aliyun.oss.version>3.8.0</aliyun.oss.version>
-        <qcloud.oss.version>5.6.8</qcloud.oss.version>
-        <qiniu.oss.version>7.2.23</qiniu.oss.version>
-        <minio.oss.version>6.0.7</minio.oss.version>
     </properties>
 
     <dependencyManagement>
         <dependencies>
-            <!-- 阿里云OSS -->
             <dependency>
-                <groupId>com.aliyun.oss</groupId>
-                <artifactId>aliyun-sdk-oss</artifactId>
-                <version>${aliyun.oss.version}</version>
-                <scope>provided</scope>
+                <groupId>com.aliyun</groupId>
+                <artifactId>aliyun-java-sdk-core</artifactId>
+                <version>3.0.0</version>
             </dependency>
-
-            <!-- COS-->
             <dependency>
-                <groupId>com.qcloud</groupId>
-                <artifactId>cos_api</artifactId>
-                <version>${qcloud.oss.version}</version>
-                <scope>provided</scope>
+                <groupId>com.aliyun</groupId>
+                <artifactId>dysmsapi20170525</artifactId>
+                <version>2.0.4</version>
             </dependency>
-
-            <!-- QiNiu -->
-            <dependency>
-                <groupId>com.qiniu</groupId>
-                <artifactId>qiniu-java-sdk</artifactId>
-                <version>${qiniu.oss.version}</version>
-                <scope>provided</scope>
-            </dependency>
-
-            <!-- MinIO -->
-            <dependency>
-                <groupId>io.minio</groupId>
-                <artifactId>minio</artifactId>
-                <version>${minio.oss.version}</version>
-                <scope>provided</scope>
-            </dependency>
-
         </dependencies>
     </dependencyManagement>
 
@@ -90,33 +64,28 @@
             <optional>true</optional>
         </dependency>
 
-        <!--阿里云OSS-->
+        <!--aliyun 短信SDK-->
         <dependency>
-            <groupId>com.aliyun.oss</groupId>
-            <artifactId>aliyun-sdk-oss</artifactId>
-            <scope>provided</scope>
+            <groupId>com.aliyun</groupId>
+            <artifactId>aliyun-java-sdk-core</artifactId>
         </dependency>
-
-        <!-- COS-->
         <dependency>
-            <groupId>com.qcloud</groupId>
-            <artifactId>cos_api</artifactId>
-            <scope>provided</scope>
-        </dependency>
-
-        <!-- QiNiu -->
-        <dependency>
-            <groupId>com.qiniu</groupId>
-            <artifactId>qiniu-java-sdk</artifactId>
-            <scope>provided</scope>
-        </dependency>
-
-        <!-- MinIO -->
-        <dependency>
-            <groupId>io.minio</groupId>
-            <artifactId>minio</artifactId>
-            <scope>provided</scope>
+            <groupId>com.aliyun</groupId>
+            <artifactId>dysmsapi20170525</artifactId>
         </dependency>
     </dependencies>
 
+    <repositories>
+        <repository>
+            <id>sonatype-nexus-staging</id>
+            <name>Sonatype Nexus Staging</name>
+            <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
+        </repository>
+    </repositories>
 </project>

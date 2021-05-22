@@ -1,2 +1,2 @@
 org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
-cn.itsite.email.autoconfigure.AliyunEmailAutoConfiguration
+com.fight2048.email.autoconfigure.AliyunEmailAutoConfiguration

@@ -4,16 +4,16 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.fight2048</groupId>
-    <artifactId>jstarter-mqtt</artifactId>
+    <artifactId>jstarter-sms</artifactId>
     <version>0.0.1</version>
     <name>${project.artifactId}</name>
     <packaging>pom</packaging>
     <url>https://github.com/leguang</url>
-    <description>集成MQTT</description>
+    <description>集成短信发送功能，包括阿里云SDK发送功能</description>
 
     <modules>
-        <module>mqtt-starter</module>
-        <module>mqtt-starter-demo</module>
+        <module>sms-starter</module>
+        <module>sms-starter-demo</module>
     </modules>
 
     <properties>

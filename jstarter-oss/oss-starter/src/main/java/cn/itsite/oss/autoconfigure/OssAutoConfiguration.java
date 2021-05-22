@@ -17,7 +17,6 @@ public class OssAutoConfiguration {
     @Bean
     @ConditionalOnMissingBean
     @ConditionalOnBean({AliyunOssTemplate.class})
-
     public DefaultOssTemplate defaultOssTemplate(AliyunOssTemplate template) {
         return new DefaultOssTemplate(template);
     }
