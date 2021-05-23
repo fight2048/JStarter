@@ -1,5 +1,7 @@
 package com.fight2048.sms;
 
+import java.util.Objects;
+
 /**
  * @author: fight2048
  * @e-mail: fight2048@outlook.com
@@ -87,5 +89,9 @@ public class SmsResponse {
 
     public void setRequestId(String requestId) {
         this.requestId = requestId;
+    }
+
+    public boolean isSuccessful() {
+        return Objects.equals(code, SMS_OK);
     }
 }
