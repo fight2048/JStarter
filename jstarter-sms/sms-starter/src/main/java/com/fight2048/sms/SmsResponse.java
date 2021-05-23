@@ -94,4 +94,14 @@ public class SmsResponse {
     public boolean isSuccessful() {
         return Objects.equals(code, SMS_OK);
     }
+
+    @Override
+    public String toString() {
+        return "SmsResponse{" +
+                "code=" + code +
+                ", message='" + message + '\'' +
+                ", uid='" + uid + '\'' +
+                ", requestId='" + requestId + '\'' +
+                '}';
+    }
 }
