@@ -27,4 +27,4 @@
 ### JDefault ###
 target
 generatorConfig.xml
-*-dev.yml
+/jstarter-sms/sms-starter-demo/src/main/resources/application-dev.yml
