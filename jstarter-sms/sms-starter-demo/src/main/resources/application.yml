@@ -3,9 +3,3 @@ server:
 spring:
   main:
     allow-bean-definition-overriding: true
-sms:
-  aliyun:
-    accessKeyId: LTAI4Fpfu9mRSA5DG67pxtdE
-    accessKeySecret: 0ayD7pYusTFNdyuE6cMZCw0SRNfTnB
-    endpoint: dysmsapi.aliyuncs.com
-    enabled: true

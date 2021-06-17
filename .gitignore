@@ -27,3 +27,4 @@
 ### JDefault ###
 target
 generatorConfig.xml
+*-dev.yml
