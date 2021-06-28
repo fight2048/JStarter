@@ -12,8 +12,8 @@ server:
 oss:
   aliyun-oss:
     access-key: 这里填写你的access key
+    secret-key: 这里填写你的secret key
     bucket-name: turing-cloud-test
     enabled: true
     endpoint: oss-cn-shenzhen.aliyuncs.com
     https: true
-    secret-key: u6dPlvYKAEYO1rS8eiHh9AUi92q2IW
