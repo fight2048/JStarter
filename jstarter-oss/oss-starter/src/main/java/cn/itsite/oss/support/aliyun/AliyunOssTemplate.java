@@ -8,7 +8,6 @@ import cn.itsite.oss.utils.Utils;
 import com.aliyun.oss.OSSClient;
 import com.aliyun.oss.common.utils.BinaryUtil;
 import com.aliyun.oss.model.*;
-import com.google.gson.Gson;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
@@ -328,7 +327,7 @@ public class AliyunOssTemplate implements OssTemplate {
         fileNames.forEach(fileName -> deleteFile(bucketName, fileName));
     }
 
-    public String getUploadToken() {
+    public Map<String, String> getUploadToken() {
         return getUploadToken(ossProperties.getAliyunOss()
                 .getBucketName());
     }
@@ -339,7 +338,7 @@ public class AliyunOssTemplate implements OssTemplate {
      * @param bucketName 存储桶名称
      * @return 上传凭证
      */
-    public String getUploadToken(String bucketName) {
+    public Map<String, String> getUploadToken(String bucketName) {
         // 默认过期时间1小时，单位 秒
         return getUploadToken(bucketName, ossProperties.getAliyunOss()
                 .getArgs()
@@ -354,7 +353,7 @@ public class AliyunOssTemplate implements OssTemplate {
      * @param expireTime 过期时间，单位秒
      * @return 上传凭证
      */
-    public String getUploadToken(String bucketName, long expireTime) {
+    public Map<String, String> getUploadToken(String bucketName, long expireTime) {
         String baseDir = "upload";
 
         long expireEndTime = System.currentTimeMillis() + expireTime * 1000;
@@ -381,7 +380,7 @@ public class AliyunOssTemplate implements OssTemplate {
         respMap.put("host", getOssEndpoint(bucketName));
         respMap.put("expire", String.valueOf(expireEndTime / 1000));
         // TODO: 2020/2/21/0021
-        return new Gson().toJson(respMap);
+        return respMap;
     }
 
     /**
