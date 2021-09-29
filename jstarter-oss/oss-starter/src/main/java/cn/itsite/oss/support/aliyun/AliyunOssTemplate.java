@@ -340,10 +340,16 @@ public class AliyunOssTemplate implements OssTemplate {
      * @return 上传凭证
      */
     public Map<String, String> getUploadToken(String bucketName) {
-        // 默认过期时间1小时，单位 秒
-        return getUploadToken(bucketName, ossProperties.getAliyunOss()
-                .getMap()
-                .get("expireTime", 60 * 60));
+        // 默认过期时间1小时，单位秒
+        OssProperties.AliyunOssProperties properties = ossProperties.getAliyunOss();
+        long expireTime = 60 * 60;
+        if (Objects.nonNull(properties)) {
+            Kv map = properties.getMap();
+            if (Objects.nonNull(map)) {
+                expireTime = map.get("expireTime", expireTime);
+            }
+        }
+        return getUploadToken(bucketName, expireTime);
     }
 
     /**
