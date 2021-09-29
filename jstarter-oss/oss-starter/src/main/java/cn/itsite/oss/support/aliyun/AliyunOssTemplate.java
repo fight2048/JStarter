@@ -2,6 +2,7 @@ package cn.itsite.oss.support.aliyun;
 
 import cn.itsite.oss.OssTemplate;
 import cn.itsite.oss.autoconfigure.OssProperties;
+import cn.itsite.oss.model.Kv;
 import cn.itsite.oss.model.OssFile;
 import cn.itsite.oss.model.OssMeta;
 import cn.itsite.oss.utils.Utils;
@@ -364,7 +365,10 @@ public class AliyunOssTemplate implements OssTemplate {
         OssProperties.AliyunOssProperties properties = ossProperties.getAliyunOss();
         long contentLengthRange = 1024 * 1024 * 10;
         if (Objects.nonNull(properties)) {
-            contentLengthRange = properties.getMap().get("contentLengthRange", contentLengthRange);
+            Kv map = properties.getMap();
+            if (Objects.nonNull(map)) {
+                contentLengthRange = map.get("contentLengthRange", contentLengthRange);
+            }
         }
         policy.addConditionItem(PolicyConditions.COND_CONTENT_LENGTH_RANGE, 0, contentLengthRange);
         policy.addConditionItem(MatchMode.StartWith, PolicyConditions.COND_KEY, baseDir);
