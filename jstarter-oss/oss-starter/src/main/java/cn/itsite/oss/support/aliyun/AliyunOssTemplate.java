@@ -341,7 +341,7 @@ public class AliyunOssTemplate implements OssTemplate {
     public Map<String, String> getUploadToken(String bucketName) {
         // 默认过期时间1小时，单位 秒
         return getUploadToken(bucketName, ossProperties.getAliyunOss()
-                .getArgs()
+                .getMap()
                 .get("expireTime", 60 * 60));
     }
 
@@ -354,16 +354,19 @@ public class AliyunOssTemplate implements OssTemplate {
      * @return 上传凭证
      */
     public Map<String, String> getUploadToken(String bucketName, long expireTime) {
-        String baseDir = "upload";
+        String baseDir = LocalDate.now().toString();
 
         long expireEndTime = System.currentTimeMillis() + expireTime * 1000;
         Date expiration = new Date(expireEndTime);
 
         PolicyConditions policy = new PolicyConditions();
         // 默认大小限制10M
-        policy.addConditionItem(PolicyConditions.COND_CONTENT_LENGTH_RANGE, 0, ossProperties.getAliyunOss()
-                .getArgs()
-                .get("contentLengthRange", 1024 * 1024 * 10));
+        OssProperties.AliyunOssProperties properties = ossProperties.getAliyunOss();
+        long contentLengthRange = 1024 * 1024 * 10;
+        if (Objects.nonNull(properties)) {
+            contentLengthRange = properties.getMap().get("contentLengthRange", contentLengthRange);
+        }
+        policy.addConditionItem(PolicyConditions.COND_CONTENT_LENGTH_RANGE, 0, contentLengthRange);
         policy.addConditionItem(MatchMode.StartWith, PolicyConditions.COND_KEY, baseDir);
 
         String postPolicy = ossClient.generatePostPolicy(expiration, policy);
@@ -371,16 +374,15 @@ public class AliyunOssTemplate implements OssTemplate {
         String encodedPolicy = BinaryUtil.toBase64String(binaryData);
         String postSignature = ossClient.calculatePostSignature(postPolicy);
 
-        Map<String, String> respMap = new LinkedHashMap<>(16);
-        respMap.put("accessid", ossProperties.getAliyunOss()
+        Map<String, String> map = new LinkedHashMap<>(16);
+        map.put("accessid", ossProperties.getAliyunOss()
                 .getAccessKey());
-        respMap.put("policy", encodedPolicy);
-        respMap.put("signature", postSignature);
-        respMap.put("dir", baseDir);
-        respMap.put("host", getOssEndpoint(bucketName));
-        respMap.put("expire", String.valueOf(expireEndTime / 1000));
-        // TODO: 2020/2/21/0021
-        return respMap;
+        map.put("policy", encodedPolicy);
+        map.put("signature", postSignature);
+        map.put("dir", baseDir);
+        map.put("host", getOssEndpoint(bucketName));
+        map.put("expire", String.valueOf(expireEndTime / 1000));
+        return map;
     }
 
     /**

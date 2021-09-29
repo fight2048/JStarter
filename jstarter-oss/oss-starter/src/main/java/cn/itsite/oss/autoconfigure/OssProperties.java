@@ -174,7 +174,7 @@ public class OssProperties {
         /**
          * 自定义属性
          */
-        private Kv args;
+        private Kv map;
 
         public boolean isEnabled() {
             return enabled;
@@ -216,12 +216,12 @@ public class OssProperties {
             this.bucketName = bucketName;
         }
 
-        public Kv getArgs() {
-            return args;
+        public Kv getMap() {
+            return map;
         }
 
-        public void setArgs(Kv args) {
-            this.args = args;
+        public void setMap(Kv map) {
+            this.map = map;
         }
     }
 }
