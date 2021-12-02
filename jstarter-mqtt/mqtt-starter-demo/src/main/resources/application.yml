@@ -6,7 +6,7 @@ mqtt:
   password:
   keepAliveInterval: 60
   connectionTimeout: 7200
-  urls: tcp://120.78.194.66:1883
+  urls: tcp://127.0.0.1:1883
   inbound:
     clientId: client-inbound
     topics: topic/#
