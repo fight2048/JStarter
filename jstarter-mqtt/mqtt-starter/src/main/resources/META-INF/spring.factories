@@ -1,2 +1,2 @@
 org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
-cn.itsite.mqtt.MqttAutoConfguration
+com.fight2048.mqtt.MqttAutoConfguration

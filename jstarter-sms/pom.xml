@@ -8,7 +8,7 @@
     <version>0.0.1</version>
     <name>${project.artifactId}</name>
     <packaging>pom</packaging>
-    <url>https://github.com/leguang</url>
+    <url>https://github.com/fight2048</url>
     <description>集成短信发送功能，包括阿里云SDK发送功能</description>
 
     <modules>

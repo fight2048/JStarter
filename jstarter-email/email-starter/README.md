@@ -54,7 +54,7 @@ oss:
     enabled: true
     access-key: **************
     secret-key: *************
-    endpoint: oss-cn-hangzhou.aliyuncs.com
+    endpoint: oss-com-hangzhou.aliyuncs.com
     bucket-name: test
     https: true
 ```

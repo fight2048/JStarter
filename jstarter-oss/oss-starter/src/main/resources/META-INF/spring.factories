@@ -1,6 +1,6 @@
 org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
-cn.itsite.oss.autoconfigure.aliyun.AliyunOssAutoConfiguration,\
-cn.itsite.oss.autoconfigure.minio.MinIoAutoConfiguration,\
-cn.itsite.oss.autoconfigure.qcloud.QCloudCosAutoConfiguration,\
-cn.itsite.oss.autoconfigure.qiniu.QiniuCloudAutoConfiguration,\
-cn.itsite.oss.autoconfigure.OssAutoConfiguration
+com.fight2048.oss.autoconfigure.aliyun.AliyunOssAutoConfiguration,\
+com.fight2048.oss.autoconfigure.minio.MinIoAutoConfiguration,\
+com.fight2048.oss.autoconfigure.qcloud.QCloudCosAutoConfiguration,\
+com.fight2048.oss.autoconfigure.qiniu.QiniuCloudAutoConfiguration,\
+com.fight2048.oss.autoconfigure.OssAutoConfiguration

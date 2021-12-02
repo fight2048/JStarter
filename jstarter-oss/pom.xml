@@ -8,7 +8,7 @@
     <version>0.0.1</version>
     <name>${project.artifactId}</name>
     <packaging>pom</packaging>
-    <url>https://github.com/leguang</url>
+    <url>https://github.com/fight2048</url>
     <description>集成多种对象存储，包括:七牛云bucket、阿里云OSS、腾讯云COS、minio</description>
 
     <modules>

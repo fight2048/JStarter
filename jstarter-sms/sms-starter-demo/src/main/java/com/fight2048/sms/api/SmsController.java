@@ -9,10 +9,10 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.HashMap;
 
 /**
- * @author: leguang
- * @e-mail: langmanleguang@qq.com
+ * @author: fight2048
+ * @e-mail: fight2048@outlook.com
  * @version: v0.0.0
- * @blog: https://github.com/leguang
+ * @blog: https://github.com/fight2048
  * @time: 2019/10/24/0024 0:25
  * @description:
  */
