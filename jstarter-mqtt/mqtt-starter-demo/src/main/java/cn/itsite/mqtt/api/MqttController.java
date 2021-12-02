@@ -37,19 +37,19 @@ public class MqttController {
         return "OK";
     }
 
-    @PostMapping("/v1/topic")
+    @PostMapping("/v1/topics")
     public Object topics(String topic, Integer qos) {
         adapter.addTopic(topic, qos);
         return "OK";
     }
 
-    @DeleteMapping("/v1/topic")
+    @DeleteMapping("/v1/topics")
     public Object topics(String topic) {
         adapter.removeTopic(topic);
         return "OK";
     }
 
-    @GetMapping("/v1/topic")
+    @GetMapping("/v1/topics")
     public Object topics() {
         return adapter.getTopic();
     }
