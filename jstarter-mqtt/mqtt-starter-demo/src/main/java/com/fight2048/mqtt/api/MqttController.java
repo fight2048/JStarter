@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.integration.annotation.ServiceActivator;
 import org.springframework.integration.mqtt.inbound.MqttPahoMessageDrivenChannelAdapter;
+import org.springframework.integration.mqtt.support.MqttHeaders;
 import org.springframework.messaging.MessageHandler;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -58,7 +59,7 @@ public class MqttController {
     @ServiceActivator(inputChannel = MqttAutoConfguration.CHANNEL_INPUT)
     public MessageHandler handler() {
         return message -> {
-            log.info("message-->" + message.getHeaders().get("mqtt_receivedTopic"));
+            log.info("message-->" + message.getHeaders().get(MqttHeaders.RECEIVED_TOPIC));
             log.info("message-->" + message.getHeaders().toString());
             log.info("message-->" + message.getPayload());
         };
