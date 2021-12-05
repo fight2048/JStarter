@@ -16,8 +16,8 @@ public class MqttProperties {
     private String username;
     private String password;
     private String[] urls;
-    private int keepAliveInterval = 60;
-    private int connectionTimeout = 7200;
+    private Integer keepAliveInterval = 60;
+    private Integer connectionTimeout = 7200;
 
     private Inbound inbound = new Inbound();
     private Outbound outbound = new Outbound();
@@ -46,19 +46,19 @@ public class MqttProperties {
         this.urls = urls;
     }
 
-    public int getKeepAliveInterval() {
+    public Integer getKeepAliveInterval() {
         return keepAliveInterval;
     }
 
-    public void setKeepAliveInterval(int keepAliveInterval) {
+    public void setKeepAliveInterval(Integer keepAliveInterval) {
         this.keepAliveInterval = keepAliveInterval;
     }
 
-    public int getConnectionTimeout() {
+    public Integer getConnectionTimeout() {
         return connectionTimeout;
     }
 
-    public void setConnectionTimeout(int connectionTimeout) {
+    public void setConnectionTimeout(Integer connectionTimeout) {
         this.connectionTimeout = connectionTimeout;
     }
 

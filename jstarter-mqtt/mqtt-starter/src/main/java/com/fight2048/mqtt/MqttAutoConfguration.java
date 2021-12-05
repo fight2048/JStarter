@@ -39,6 +39,8 @@ public class MqttAutoConfguration {
     @Bean
     public MqttConnectOptions mqttConnectOptions() {
         MqttConnectOptions mqttConnectOptions = new MqttConnectOptions();
+        mqttConnectOptions.setAutomaticReconnect(true);
+
         if (Objects.isNull(mqttProperties)) {
             return mqttConnectOptions;
         }
@@ -49,13 +51,18 @@ public class MqttAutoConfguration {
             mqttConnectOptions.setPassword(mqttProperties.getPassword().toCharArray());
         }
 
-        if (!ObjectUtils.isEmpty(mqttProperties.getUrls())) {
+        if (Objects.nonNull(mqttProperties.getUrls())) {
             mqttConnectOptions.setServerURIs(mqttProperties.getUrls());
         }
 
-        mqttConnectOptions.setKeepAliveInterval(mqttProperties.getKeepAliveInterval());
-        mqttConnectOptions.setConnectionTimeout(mqttProperties.getConnectionTimeout());
-        mqttConnectOptions.setAutomaticReconnect(true);
+        if (Objects.nonNull(mqttProperties.getKeepAliveInterval())) {
+            mqttConnectOptions.setKeepAliveInterval(mqttProperties.getKeepAliveInterval());
+        }
+
+        if (Objects.nonNull(mqttProperties.getConnectionTimeout())) {
+            mqttConnectOptions.setConnectionTimeout(mqttProperties.getConnectionTimeout());
+        }
+
         return mqttConnectOptions;
     }
 
@@ -100,8 +107,15 @@ public class MqttAutoConfguration {
                 new MqttPahoMessageDrivenChannelAdapter(inbound.getUrl(), inbound.getClientId(), mqttPahoClientFactory, inbound.getTopics());
         adapter.setConverter(new DefaultPahoMessageConverter());
         adapter.setQos(inbound.getQos());
-        adapter.setCompletionTimeout(mqttProperties.getConnectionTimeout());
-        adapter.setRecoveryInterval(mqttProperties.getKeepAliveInterval());
+
+        if (Objects.nonNull(mqttProperties.getKeepAliveInterval())) {
+            adapter.setRecoveryInterval(mqttProperties.getKeepAliveInterval());
+        }
+
+        if (Objects.nonNull(mqttProperties.getConnectionTimeout())) {
+            adapter.setCompletionTimeout(mqttProperties.getConnectionTimeout());
+        }
+
         adapter.setOutputChannel(inputChannel());
         return adapter;
     }
