@@ -14,7 +14,10 @@ import org.springframework.integration.mqtt.outbound.MqttPahoMessageHandler;
 import org.springframework.integration.mqtt.support.DefaultPahoMessageConverter;
 import org.springframework.messaging.MessageChannel;
 import org.springframework.messaging.MessageHandler;
+import org.springframework.util.Assert;
 import org.springframework.util.ObjectUtils;
+
+import java.util.Objects;
 
 /**
  * @author: fight2048
@@ -36,13 +39,20 @@ public class MqttAutoConfguration {
     @Bean
     public MqttConnectOptions mqttConnectOptions() {
         MqttConnectOptions mqttConnectOptions = new MqttConnectOptions();
-        if (!ObjectUtils.isEmpty(mqttProperties.getUsername())
-                && !ObjectUtils.isEmpty(mqttProperties.getPassword())) {
+        if (Objects.isNull(mqttProperties)) {
+            return mqttConnectOptions;
+        }
+        if (!ObjectUtils.isEmpty(mqttProperties.getUsername())) {
             mqttConnectOptions.setUserName(mqttProperties.getUsername());
+        }
+        if (!ObjectUtils.isEmpty(mqttProperties.getPassword())) {
             mqttConnectOptions.setPassword(mqttProperties.getPassword().toCharArray());
         }
 
-        mqttConnectOptions.setServerURIs(mqttProperties.getUrls());
+        if (!ObjectUtils.isEmpty(mqttProperties.getUrls())) {
+            mqttConnectOptions.setServerURIs(mqttProperties.getUrls());
+        }
+
         mqttConnectOptions.setKeepAliveInterval(mqttProperties.getKeepAliveInterval());
         mqttConnectOptions.setConnectionTimeout(mqttProperties.getConnectionTimeout());
         mqttConnectOptions.setAutomaticReconnect(true);
@@ -64,10 +74,13 @@ public class MqttAutoConfguration {
     @Bean
     @ServiceActivator(inputChannel = CHANNEL_OUTPUT)
     public MessageHandler outbound(MqttPahoClientFactory mqttPahoClientFactory) {
+        Assert.notNull(mqttProperties, "'mqttProperties' must not be null");
         MqttProperties.Outbound outbound = mqttProperties.getOutbound();
+        Assert.notNull(outbound, "'mqttProperties.outbound' must not be null");
+
         MqttPahoMessageHandler messageHandler = new MqttPahoMessageHandler(outbound.getClientId(), mqttPahoClientFactory);
         messageHandler.setAsync(true);
-        messageHandler.setDefaultTopic(outbound.getTopics()[0]);
+        messageHandler.setDefaultTopic(outbound.getTopic());
         return messageHandler;
     }
 
@@ -79,11 +92,14 @@ public class MqttAutoConfguration {
 
     @Bean
     public MqttPahoMessageDrivenChannelAdapter inbound(MqttPahoClientFactory mqttPahoClientFactory) {
+        Assert.notNull(mqttProperties, "'mqttProperties' must not be null");
         MqttProperties.Inbound inbound = mqttProperties.getInbound();
+        Assert.notNull(inbound, "'mqttProperties.inbound' must not be null");
+
         MqttPahoMessageDrivenChannelAdapter adapter =
                 new MqttPahoMessageDrivenChannelAdapter(inbound.getUrl(), inbound.getClientId(), mqttPahoClientFactory, inbound.getTopics());
         adapter.setConverter(new DefaultPahoMessageConverter());
-        adapter.setQos(2);
+        adapter.setQos(inbound.getQos());
         adapter.setCompletionTimeout(mqttProperties.getConnectionTimeout());
         adapter.setRecoveryInterval(mqttProperties.getKeepAliveInterval());
         adapter.setOutputChannel(inputChannel());

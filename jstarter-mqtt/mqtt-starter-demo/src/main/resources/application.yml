@@ -9,7 +9,7 @@ mqtt:
   urls: tcp://127.0.0.1:1883
   inbound:
     clientId: client-inbound
-    topics: topic/#
+    topics: /#
   outbound:
     clientId: client-outbound
-    topics: topic1
+    topics: /#

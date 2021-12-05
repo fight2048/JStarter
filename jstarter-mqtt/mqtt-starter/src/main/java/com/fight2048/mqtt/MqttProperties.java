@@ -80,6 +80,8 @@ public class MqttProperties {
 
     public static class Inbound extends Properties {
         private String url;
+        private String[] topics;
+        private int[] qos;
 
         public String getUrl() {
             return url;
@@ -88,22 +90,6 @@ public class MqttProperties {
         public void setUrl(String url) {
             this.url = url;
         }
-    }
-
-    public static class Outbound extends Properties {
-    }
-
-    public static class Properties {
-        private String clientId;
-        private String[] topics;
-
-        public String getClientId() {
-            return clientId;
-        }
-
-        public void setClientId(String clientId) {
-            this.clientId = clientId;
-        }
 
         public String[] getTopics() {
             return topics;
@@ -111,6 +97,38 @@ public class MqttProperties {
 
         public void setTopics(String[] topics) {
             this.topics = topics;
+        }
+
+        public int[] getQos() {
+            return qos;
+        }
+
+        public void setQos(int[] qos) {
+            this.qos = qos;
+        }
+    }
+
+    public static class Outbound extends Properties {
+        private String topic;
+
+        public String getTopic() {
+            return topic;
+        }
+
+        public void setTopic(String topic) {
+            this.topic = topic;
+        }
+    }
+
+    public static class Properties {
+        private String clientId;
+
+        public String getClientId() {
+            return clientId;
+        }
+
+        public void setClientId(String clientId) {
+            this.clientId = clientId;
         }
     }
 }
