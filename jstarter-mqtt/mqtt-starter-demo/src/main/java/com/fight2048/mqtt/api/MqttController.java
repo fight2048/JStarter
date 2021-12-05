@@ -58,7 +58,9 @@ public class MqttController {
     @ServiceActivator(inputChannel = MqttAutoConfguration.CHANNEL_INPUT)
     public MessageHandler handler() {
         return message -> {
-            log.info("handler--message-->" + message.getPayload());
+            log.info("message-->" + message.getHeaders().get("mqtt_receivedTopic"));
+            log.info("message-->" + message.getHeaders().toString());
+            log.info("message-->" + message.getPayload());
         };
     }
 }
