@@ -1,0 +1,2 @@
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+com.fight2048.logging.configuration.LoggerSupportAutoConfiguration

@@ -15,6 +15,7 @@
         <module>jstarter-email</module>
         <module>jstarter-mqtt</module>
         <module>jstarter-sms</module>
+        <module>jstarter-logging</module>
     </modules>
 
 
