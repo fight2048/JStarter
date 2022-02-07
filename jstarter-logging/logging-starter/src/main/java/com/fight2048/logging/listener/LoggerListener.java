@@ -1,4 +1,6 @@
-package com.fight2048.logging;
+package com.fight2048.logging.listener;
+
+import com.fight2048.logging.LoggerMetadate;
 
 public interface LoggerListener {
 

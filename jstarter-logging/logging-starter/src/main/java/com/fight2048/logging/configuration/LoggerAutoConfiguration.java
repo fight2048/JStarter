@@ -1,6 +1,6 @@
 package com.fight2048.logging.configuration;
 
-import com.fight2048.logging.LoggerListener;
+import com.fight2048.logging.listener.LoggerListener;
 import com.fight2048.logging.aop.AopLoggerAdvisor;
 import com.fight2048.logging.parser.DefaultLoggerParser;
 import com.fight2048.logging.parser.Swagger3LoggerParser;

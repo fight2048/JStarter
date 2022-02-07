@@ -1,4 +1,6 @@
-package com.fight2048.logging;
+package com.fight2048.logging.annotation;
+
+import com.fight2048.logging.LoggerMetadate;
 
 import java.lang.annotation.*;
 

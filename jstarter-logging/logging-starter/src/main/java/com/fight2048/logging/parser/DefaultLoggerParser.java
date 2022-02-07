@@ -1,6 +1,6 @@
 package com.fight2048.logging.parser;
 
-import com.fight2048.logging.Logger;
+import com.fight2048.logging.annotation.Logger;
 import com.fight2048.logging.LoggerTag;
 import org.springframework.core.annotation.AnnotationUtils;
 

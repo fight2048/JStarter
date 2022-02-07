@@ -1,5 +1,7 @@
 package com.fight2048.logging;
 
+import com.fight2048.logging.annotation.Logger;
+
 import java.io.PrintWriter;
 import java.io.Serializable;
 import java.io.StringWriter;
