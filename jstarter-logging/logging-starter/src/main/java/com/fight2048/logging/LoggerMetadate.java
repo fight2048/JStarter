@@ -89,6 +89,14 @@ public class LoggerMetadate {
         this.action = action;
     }
 
+    public Logger.Type getType() {
+        return type;
+    }
+
+    public void setType(Logger.Type type) {
+        this.type = type;
+    }
+
     public Method getMethod() {
         return method;
     }
