@@ -1,11 +1,11 @@
-package com.fight2048.logging.events;
+package com.fight2048.logging.event;
 
 import com.fight2048.logging.LoggerMetadate;
 
-public class LoggerAfterEvent {
+public class LoggerBeforeEvent {
     private LoggerMetadate metadate;
 
-    public LoggerAfterEvent(LoggerMetadate metadate) {
+    public LoggerBeforeEvent(LoggerMetadate metadate) {
         this.metadate = metadate;
     }
 
