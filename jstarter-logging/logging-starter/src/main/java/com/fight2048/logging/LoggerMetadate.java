@@ -23,6 +23,13 @@ public class LoggerMetadate {
     private String action;
 
     /**
+     * 访问的类型
+     *
+     * @see Logger#type()
+     */
+    private Logger.Type type;
+
+    /**
      * 访问对应的java方法
      */
     private Method method;
