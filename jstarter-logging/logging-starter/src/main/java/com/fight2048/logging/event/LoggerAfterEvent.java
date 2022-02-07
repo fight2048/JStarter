@@ -5,15 +5,15 @@ import com.fight2048.logging.LoggerMetadate;
 public class LoggerAfterEvent {
     private LoggerMetadate logger;
 
-    public LoggerAfterEvent(LoggerMetadate metadate) {
-        this.logger = metadate;
+    public LoggerAfterEvent(LoggerMetadate logger) {
+        this.logger = logger;
     }
 
-    public LoggerMetadate getMetadate() {
+    public LoggerMetadate getLogger() {
         return logger;
     }
 
-    public void setMetadate(LoggerMetadate metadate) {
-        this.logger = metadate;
+    public void setLogger(LoggerMetadate logger) {
+        this.logger = logger;
     }
 }
