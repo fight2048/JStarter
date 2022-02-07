@@ -29,6 +29,6 @@ import java.lang.annotation.*;
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
 @Inherited
-@ImportAutoConfiguration(LoggerSupportAutoConfiguration.class)
+@ImportAutoConfiguration(LoggerAutoConfiguration.class)
 public @interface EnableLogger {
 }

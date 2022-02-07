@@ -18,7 +18,7 @@ import org.springframework.core.annotation.Order;
  */
 @ConditionalOnClass(LoggerListener.class)
 @Configuration
-public class LoggerSupportAutoConfiguration {
+public class LoggerAutoConfiguration {
 
     @Bean
     @ConditionalOnWebApplication(type = ConditionalOnWebApplication.Type.SERVLET)
