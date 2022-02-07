@@ -3,17 +3,17 @@ package com.fight2048.logging.event;
 import com.fight2048.logging.LoggerMetadate;
 
 public class LoggerBeforeEvent {
-    private LoggerMetadate metadate;
+    private LoggerMetadate logger;
 
     public LoggerBeforeEvent(LoggerMetadate metadate) {
-        this.metadate = metadate;
+        this.logger = metadate;
     }
 
     public LoggerMetadate getMetadate() {
-        return metadate;
+        return logger;
     }
 
     public void setMetadate(LoggerMetadate metadate) {
-        this.metadate = metadate;
+        this.logger = metadate;
     }
 }
