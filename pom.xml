@@ -16,6 +16,7 @@
         <module>jstarter-mqtt</module>
         <module>jstarter-sms</module>
         <module>jstarter-logging</module>
+        <module>crypto-starter</module>
     </modules>
 
 
