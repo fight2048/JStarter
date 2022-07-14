@@ -1,14 +1,14 @@
 package com.fight2048.oss.support.aliyun;
 
+import com.aliyun.oss.OSSClient;
+import com.aliyun.oss.common.utils.BinaryUtil;
+import com.aliyun.oss.model.*;
 import com.fight2048.oss.OssTemplate;
 import com.fight2048.oss.autoconfigure.OssProperties;
 import com.fight2048.oss.model.Kv;
 import com.fight2048.oss.model.OssFile;
 import com.fight2048.oss.model.OssMeta;
 import com.fight2048.oss.utils.Utils;
-import com.aliyun.oss.OSSClient;
-import com.aliyun.oss.common.utils.BinaryUtil;
-import com.aliyun.oss.model.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
@@ -367,9 +367,9 @@ public class AliyunOssTemplate implements OssTemplate {
         Date expiration = new Date(expireEndTime);
 
         PolicyConditions policy = new PolicyConditions();
-        // 默认大小限制10M
+        //默认大小限制1G
         OssProperties.AliyunOssProperties properties = ossProperties.getAliyunOss();
-        long contentLengthRange = 1024 * 1024 * 10;
+        long contentLengthRange = 1024 * 1024 * 1024;
         if (Objects.nonNull(properties)) {
             Kv map = properties.getMap();
             if (Objects.nonNull(map)) {
