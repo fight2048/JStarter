@@ -14,14 +14,15 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>2.4.13</version>
+        <version>3.1.2</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-        <java.version>1.8</java.version>
+        <java.version>17</java.version>
+        <official.site>http://fight2048.com</official.site>
         <aliyun.oss.version>3.8.0</aliyun.oss.version>
         <qcloud.oss.version>5.6.8</qcloud.oss.version>
         <qiniu.oss.version>7.2.23</qiniu.oss.version>
@@ -31,11 +32,11 @@
     <dependencyManagement>
         <dependencies>
             <!-- lombok -->
-            <dependency>
-                <groupId>org.projectlombok</groupId>
-                <artifactId>lombok</artifactId>
-                <version>1.16.12</version>
-            </dependency>
+<!--            <dependency>-->
+<!--                <groupId>org.projectlombok</groupId>-->
+<!--                <artifactId>lombok</artifactId>-->
+<!--                <version>1.16.12</version>-->
+<!--            </dependency>-->
 
             <!-- 阿里云OSS -->
             <dependency>
