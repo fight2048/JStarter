@@ -3,9 +3,7 @@ package com.fight2048.oss;
 import com.fight2048.oss.model.OssFile;
 import com.fight2048.oss.model.OssMeta;
 import com.qiniu.common.QiniuException;
-import io.minio.errors.*;
 import org.springframework.web.multipart.MultipartFile;
-import org.xmlpull.v1.XmlPullParserException;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -21,37 +19,37 @@ public class DefaultOssTemplate implements OssTemplate {
     }
 
     @Override
-    public void createBucket(String bucketName) throws IOException, XmlPullParserException, NoSuchAlgorithmException, InvalidKeyException, InternalException, NoResponseException, InvalidBucketNameException, InsufficientDataException, ErrorResponseException, InvalidObjectPrefixException, RegionConflictException {
+    public void createBucket(String bucketName) throws IOException, NoSuchAlgorithmException, InvalidKeyException {
         template.createBucket(bucketName);
     }
 
     @Override
-    public void deleteBucket(String bucketName) throws IOException, XmlPullParserException, NoSuchAlgorithmException, InvalidKeyException, ErrorResponseException, NoResponseException, InvalidBucketNameException, InsufficientDataException, InternalException {
+    public void deleteBucket(String bucketName) throws IOException, NoSuchAlgorithmException, InvalidKeyException {
         template.deleteBucket(bucketName);
     }
 
     @Override
-    public boolean bucketExists(String bucketName) throws IOException, XmlPullParserException, NoSuchAlgorithmException, InvalidKeyException, ErrorResponseException, NoResponseException, InvalidBucketNameException, InsufficientDataException, InternalException {
+    public boolean bucketExists(String bucketName) throws IOException, NoSuchAlgorithmException, InvalidKeyException {
         return template.bucketExists(bucketName);
     }
 
     @Override
-    public void copyFile(String sourceBucketName, String fileName, String targetBucketName) throws IOException, XmlPullParserException, NoSuchAlgorithmException, InvalidKeyException, InvalidArgumentException, InternalException, NoResponseException, InvalidBucketNameException, InsufficientDataException, ErrorResponseException {
+    public void copyFile(String sourceBucketName, String fileName, String targetBucketName) throws IOException, NoSuchAlgorithmException, InvalidKeyException {
         template.copyFile(sourceBucketName, fileName, targetBucketName);
     }
 
     @Override
-    public void copyFile(String sourceBucketName, String fileName, String targetBucketName, String targetFileName) throws IOException, InvalidKeyException, NoSuchAlgorithmException, XmlPullParserException, InvalidArgumentException, ErrorResponseException, NoResponseException, InvalidBucketNameException, InsufficientDataException, InternalException {
+    public void copyFile(String sourceBucketName, String fileName, String targetBucketName, String targetFileName) throws IOException, InvalidKeyException, NoSuchAlgorithmException {
         template.copyFile(sourceBucketName, fileName, targetBucketName, targetFileName);
     }
 
     @Override
-    public OssMeta getFileMetaInfo(String fileName) throws IOException, InvalidKeyException, NoSuchAlgorithmException, XmlPullParserException, InternalException, NoResponseException, InvalidBucketNameException, InsufficientDataException, ErrorResponseException {
+    public OssMeta getFileMetaInfo(String fileName) throws IOException, InvalidKeyException, NoSuchAlgorithmException {
         return template.getFileMetaInfo(fileName);
     }
 
     @Override
-    public OssMeta getFileMetaInfo(String bucketName, String fileName) throws IOException, XmlPullParserException, NoSuchAlgorithmException, InvalidKeyException, ErrorResponseException, NoResponseException, InvalidBucketNameException, InsufficientDataException, InternalException {
+    public OssMeta getFileMetaInfo(String bucketName, String fileName) throws IOException, NoSuchAlgorithmException, InvalidKeyException {
         return template.getFileMetaInfo(bucketName, fileName);
     }
 
@@ -76,37 +74,37 @@ public class DefaultOssTemplate implements OssTemplate {
     }
 
     @Override
-    public OssFile uploadFile(MultipartFile file) throws IOException, XmlPullParserException, NoSuchAlgorithmException, RegionConflictException, InvalidKeyException, InvalidArgumentException, InvalidObjectPrefixException, NoResponseException, InvalidBucketNameException, InsufficientDataException, ErrorResponseException, InternalException {
+    public OssFile uploadFile(MultipartFile file) throws IOException, NoSuchAlgorithmException, InvalidKeyException {
         return template.uploadFile(file);
     }
 
     @Override
-    public OssFile uploadFile(String fileName, MultipartFile file) throws IOException, InvalidKeyException, NoSuchAlgorithmException, XmlPullParserException, InvalidArgumentException, InternalException, InvalidObjectPrefixException, NoResponseException, InvalidBucketNameException, InsufficientDataException, ErrorResponseException, RegionConflictException {
+    public OssFile uploadFile(String fileName, MultipartFile file) throws IOException, NoSuchAlgorithmException {
         return template.uploadFile(fileName, file);
     }
 
     @Override
-    public OssFile uploadFile(String bucketName, String fileName, MultipartFile file) throws IOException, XmlPullParserException, NoSuchAlgorithmException, RegionConflictException, InvalidKeyException, InvalidArgumentException, InvalidObjectPrefixException, NoResponseException, InvalidBucketNameException, InsufficientDataException, ErrorResponseException, InternalException {
+    public OssFile uploadFile(String bucketName, String fileName, MultipartFile file) throws IOException, NoSuchAlgorithmException, InvalidKeyException {
         return template.uploadFile(bucketName, fileName, file);
     }
 
     @Override
-    public OssFile uploadFile(String fileName, InputStream stream) throws IOException, XmlPullParserException, NoSuchAlgorithmException, RegionConflictException, InvalidKeyException, InvalidArgumentException, InvalidObjectPrefixException, NoResponseException, InvalidBucketNameException, InsufficientDataException, ErrorResponseException, InternalException {
+    public OssFile uploadFile(String fileName, InputStream stream) throws IOException, NoSuchAlgorithmException, InvalidKeyException {
         return template.uploadFile(fileName, stream);
     }
 
     @Override
-    public OssFile uploadFile(String bucketName, String fileName, InputStream stream) throws IOException, InvalidKeyException, NoSuchAlgorithmException, XmlPullParserException, InvalidArgumentException, InvalidBucketNameException, InvalidObjectPrefixException, InternalException, NoResponseException, InsufficientDataException, ErrorResponseException, RegionConflictException {
+    public OssFile uploadFile(String bucketName, String fileName, InputStream stream) throws IOException, InvalidKeyException, NoSuchAlgorithmException {
         return template.uploadFile(bucketName, fileName, stream);
     }
 
     @Override
-    public void deleteFile(String fileName) throws IOException, XmlPullParserException, NoSuchAlgorithmException, InvalidKeyException, InvalidArgumentException, ErrorResponseException, NoResponseException, InvalidBucketNameException, InsufficientDataException, InternalException {
+    public void deleteFile(String fileName) throws IOException, NoSuchAlgorithmException, InvalidKeyException {
         template.deleteFile(fileName);
     }
 
     @Override
-    public void deleteFile(String bucketName, String fileName) throws IOException, XmlPullParserException, NoSuchAlgorithmException, InvalidKeyException, InvalidArgumentException, ErrorResponseException, NoResponseException, InvalidBucketNameException, InsufficientDataException, InternalException {
+    public void deleteFile(String bucketName, String fileName) throws IOException, NoSuchAlgorithmException, InvalidKeyException {
         template.deleteFile(bucketName, fileName);
     }
 

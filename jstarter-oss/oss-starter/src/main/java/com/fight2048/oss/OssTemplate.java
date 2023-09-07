@@ -3,9 +3,7 @@ package com.fight2048.oss;
 import com.fight2048.oss.model.OssFile;
 import com.fight2048.oss.model.OssMeta;
 import com.qiniu.common.QiniuException;
-import io.minio.errors.*;
 import org.springframework.web.multipart.MultipartFile;
-import org.xmlpull.v1.XmlPullParserException;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -23,14 +21,14 @@ public interface OssTemplate {
      *
      * @param bucketName 存储桶名称
      */
-    void createBucket(String bucketName) throws IOException, InvalidKeyException, NoSuchAlgorithmException, InsufficientDataException, ErrorResponseException, NoResponseException, InvalidBucketNameException, XmlPullParserException, InternalException, RegionConflictException, InvalidObjectPrefixException;
+    void createBucket(String bucketName) throws IOException, InvalidKeyException, NoSuchAlgorithmException;
 
     /**
      * 删除 存储桶
      *
      * @param bucketName 存储桶名称
      */
-    void deleteBucket(String bucketName) throws IOException, InvalidKeyException, NoSuchAlgorithmException, InsufficientDataException, InternalException, NoResponseException, InvalidBucketNameException, XmlPullParserException, ErrorResponseException;
+    void deleteBucket(String bucketName) throws IOException, InvalidKeyException, NoSuchAlgorithmException;
 
     /**
      * 存储桶是否存在
@@ -38,7 +36,7 @@ public interface OssTemplate {
      * @param bucketName 存储桶名称
      * @return boolean
      */
-    boolean bucketExists(String bucketName) throws IOException, InvalidKeyException, NoSuchAlgorithmException, InsufficientDataException, InternalException, NoResponseException, InvalidBucketNameException, XmlPullParserException, ErrorResponseException;
+    boolean bucketExists(String bucketName) throws IOException, InvalidKeyException, NoSuchAlgorithmException;
 
     /**
      * 拷贝文件
@@ -47,7 +45,7 @@ public interface OssTemplate {
      * @param fileName         存储桶文件名称
      * @param targetBucketName 目标存储桶名称
      */
-    void copyFile(String sourceBucketName, String fileName, String targetBucketName) throws IOException, InvalidKeyException, NoSuchAlgorithmException, XmlPullParserException, InvalidArgumentException, ErrorResponseException, NoResponseException, InvalidBucketNameException, InsufficientDataException, InternalException;
+    void copyFile(String sourceBucketName, String fileName, String targetBucketName) throws IOException, InvalidKeyException, NoSuchAlgorithmException;
 
     /**
      * 拷贝文件，重命名
@@ -57,7 +55,7 @@ public interface OssTemplate {
      * @param targetBucketName 目标存储桶名称
      * @param targetFileName   目标存储桶文件名称
      */
-    void copyFile(String sourceBucketName, String fileName, String targetBucketName, String targetFileName) throws IOException, XmlPullParserException, NoSuchAlgorithmException, InvalidKeyException, InvalidArgumentException, InternalException, NoResponseException, InvalidBucketNameException, InsufficientDataException, ErrorResponseException;
+    void copyFile(String sourceBucketName, String fileName, String targetBucketName, String targetFileName) throws IOException, NoSuchAlgorithmException, InvalidKeyException;
 
     /**
      * 获取文件元信息
@@ -65,7 +63,7 @@ public interface OssTemplate {
      * @param fileName 存储桶文件名称
      * @return 文件元信息
      */
-    OssMeta getFileMetaInfo(String fileName) throws IOException, XmlPullParserException, NoSuchAlgorithmException, InvalidKeyException, ErrorResponseException, NoResponseException, InvalidBucketNameException, InsufficientDataException, InternalException;
+    OssMeta getFileMetaInfo(String fileName) throws IOException, NoSuchAlgorithmException, InvalidKeyException;
 
     /**
      * 获取文件元信息
@@ -74,7 +72,7 @@ public interface OssTemplate {
      * @param fileName   存储桶文件名称
      * @return 文件元信息
      */
-    OssMeta getFileMetaInfo(String bucketName, String fileName) throws IOException, InvalidKeyException, NoSuchAlgorithmException, InsufficientDataException, InternalException, NoResponseException, InvalidBucketNameException, XmlPullParserException, ErrorResponseException;
+    OssMeta getFileMetaInfo(String bucketName, String fileName) throws IOException, InvalidKeyException, NoSuchAlgorithmException;
 
     /**
      * 获取文件相对路径
@@ -116,7 +114,7 @@ public interface OssTemplate {
      * @param file 上传文件类
      * @return 文件信息
      */
-    OssFile uploadFile(MultipartFile file) throws IOException, InvalidKeyException, NoSuchAlgorithmException, XmlPullParserException, InvalidArgumentException, InternalException, InvalidObjectPrefixException, NoResponseException, InvalidBucketNameException, InsufficientDataException, ErrorResponseException, RegionConflictException;
+    OssFile uploadFile(MultipartFile file) throws IOException, InvalidKeyException, NoSuchAlgorithmException;
 
     /**
      * 上传文件
@@ -125,7 +123,7 @@ public interface OssTemplate {
      * @param fileName 上传文件名
      * @return 文件信息
      */
-    OssFile uploadFile(String fileName, MultipartFile file) throws IOException, XmlPullParserException, NoSuchAlgorithmException, RegionConflictException, InvalidKeyException, InvalidArgumentException, InvalidObjectPrefixException, NoResponseException, InvalidBucketNameException, InsufficientDataException, ErrorResponseException, InternalException;
+    OssFile uploadFile(String fileName, MultipartFile file) throws IOException, NoSuchAlgorithmException;
 
     /**
      * 上传文件
@@ -135,7 +133,7 @@ public interface OssTemplate {
      * @param file       上传文件类
      * @return 文件信息
      */
-    OssFile uploadFile(String bucketName, String fileName, MultipartFile file) throws IOException, InvalidKeyException, NoSuchAlgorithmException, XmlPullParserException, InvalidArgumentException, InvalidBucketNameException, InvalidObjectPrefixException, InternalException, NoResponseException, InsufficientDataException, ErrorResponseException, RegionConflictException;
+    OssFile uploadFile(String bucketName, String fileName, MultipartFile file) throws IOException, InvalidKeyException, NoSuchAlgorithmException;
 
     /**
      * 上传文件
@@ -144,7 +142,7 @@ public interface OssTemplate {
      * @param stream   文件流
      * @return 文件信息
      */
-    OssFile uploadFile(String fileName, InputStream stream) throws IOException, InvalidKeyException, NoSuchAlgorithmException, XmlPullParserException, InvalidArgumentException, InvalidBucketNameException, InvalidObjectPrefixException, InternalException, NoResponseException, InsufficientDataException, ErrorResponseException, RegionConflictException;
+    OssFile uploadFile(String fileName, InputStream stream) throws IOException, InvalidKeyException, NoSuchAlgorithmException;
 
     /**
      * 上传文件
@@ -154,14 +152,14 @@ public interface OssTemplate {
      * @param stream     文件流
      * @return 文件信息
      */
-    OssFile uploadFile(String bucketName, String fileName, InputStream stream) throws IOException, XmlPullParserException, NoSuchAlgorithmException, RegionConflictException, InvalidObjectPrefixException, InvalidKeyException, InternalException, NoResponseException, InvalidBucketNameException, InsufficientDataException, ErrorResponseException, InvalidArgumentException;
+    OssFile uploadFile(String bucketName, String fileName, InputStream stream) throws IOException, NoSuchAlgorithmException, InvalidKeyException;
 
     /**
      * 删除文件
      *
      * @param fileName 存储桶对象名称
      */
-    void deleteFile(String fileName) throws IOException, InvalidKeyException, NoSuchAlgorithmException, InsufficientDataException, InvalidArgumentException, InternalException, NoResponseException, InvalidBucketNameException, XmlPullParserException, ErrorResponseException;
+    void deleteFile(String fileName) throws IOException, InvalidKeyException, NoSuchAlgorithmException;
 
     /**
      * 删除文件
@@ -169,7 +167,7 @@ public interface OssTemplate {
      * @param bucketName 存储桶名称
      * @param fileName   存储桶对象名称
      */
-    void deleteFile(String bucketName, String fileName) throws IOException, InvalidKeyException, NoSuchAlgorithmException, InsufficientDataException, InvalidArgumentException, InternalException, NoResponseException, InvalidBucketNameException, XmlPullParserException, ErrorResponseException;
+    void deleteFile(String bucketName, String fileName) throws IOException, InvalidKeyException, NoSuchAlgorithmException;
 
     /**
      * 批量删除文件

@@ -2,7 +2,6 @@ package com.fight2048.oss.autoconfigure;
 
 import com.fight2048.oss.DefaultOssTemplate;
 import com.fight2048.oss.support.aliyun.AliyunOssTemplate;
-import com.fight2048.oss.support.minio.MinIoTemplate;
 import com.fight2048.oss.support.qcloud.QCloudCosTemplate;
 import com.fight2048.oss.support.qiniu.QiniuCloudTemplate;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
@@ -21,13 +20,13 @@ public class OssAutoConfiguration {
         return new DefaultOssTemplate(template);
     }
 
-    @Bean
-    @ConditionalOnMissingBean
-    @ConditionalOnBean({MinIoTemplate.class})
-    @ConditionalOnProperty(value = "oss.min-io.enabled", havingValue = "true")
-    public DefaultOssTemplate minIoOssTemplate(MinIoTemplate template) {
-        return new DefaultOssTemplate(template);
-    }
+//    @Bean
+//    @ConditionalOnMissingBean
+//    @ConditionalOnBean({MinIoTemplate.class})
+//    @ConditionalOnProperty(value = "oss.min-io.enabled", havingValue = "true")
+//    public DefaultOssTemplate minIoOssTemplate(MinIoTemplate template) {
+//        return new DefaultOssTemplate(template);
+//    }
 
     @Bean
     @ConditionalOnMissingBean

@@ -1,5 +1,4 @@
 com.fight2048.oss.autoconfigure.aliyun.AliyunOssAutoConfiguration
-com.fight2048.oss.autoconfigure.minio.MinIoAutoConfiguration
 com.fight2048.oss.autoconfigure.qcloud.QCloudCosAutoConfiguration
 com.fight2048.oss.autoconfigure.qiniu.QiniuCloudAutoConfiguration
 com.fight2048.oss.autoconfigure.OssAutoConfiguration
