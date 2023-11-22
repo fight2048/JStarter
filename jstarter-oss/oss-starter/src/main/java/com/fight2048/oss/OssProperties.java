@@ -207,7 +207,7 @@ public class OssProperties {
      */
     public static class QiniuProperties extends CommonProperties {
         /**
-         * 区域简称，https://developer.qiniu.com/kodo/manual/1671/region-endpoint
+         * 区域简称，https://developer.qiniu.com/kodo/1671/region-endpoint-fq
          */
         private String region;
 

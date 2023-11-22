@@ -6,6 +6,7 @@ import com.qcloud.cos.COSClient;
 import com.qcloud.cos.ClientConfig;
 import com.qcloud.cos.auth.BasicCOSCredentials;
 import com.qcloud.cos.auth.COSCredentials;
+import com.qcloud.cos.http.HttpProtocol;
 import com.qcloud.cos.region.Region;
 import org.springframework.boot.autoconfigure.AutoConfigureBefore;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
@@ -40,6 +41,7 @@ public class QCloudCosAutoConfiguration {
         clientConfig.setConnectionTimeout(50 * 1000);
         // 设置从连接池中获取连接的超时时间（单位：毫秒），默认不超时。
         clientConfig.setConnectionRequestTimeout(1000);
+        clientConfig.setHttpProtocol(HttpProtocol.valueOf(properties.getScheme().toUpperCase()));
         return new COSClient(credentials, clientConfig);
     }
 
