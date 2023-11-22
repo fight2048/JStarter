@@ -39,7 +39,7 @@ public class OssController {
 
     @DeleteMapping("/file")
     public Object deleteFile(String key) {
-        oss.deleteObject("telemedicine-files", 111 + "");
+        oss.deleteObject("telemedicine-files", key);
         return "OK";
     }
 }
