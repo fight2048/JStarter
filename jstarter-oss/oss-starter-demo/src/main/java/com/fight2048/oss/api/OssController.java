@@ -1,17 +1,13 @@
 package com.fight2048.oss.api;
 
-import com.fight2048.oss.DefaultOssTemplate;
-import com.fight2048.oss.model.OssFile;
-import io.minio.errors.*;
+import com.aliyun.oss.OSS;
+import com.fight2048.oss.autoconfigure.aliyun.AliyunOssTemplate;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-import org.xmlpull.v1.XmlPullParserException;
 
 import java.io.IOException;
-import java.security.InvalidKeyException;
-import java.security.NoSuchAlgorithmException;
 
 /**
  * @author: fight2048
@@ -23,28 +19,27 @@ import java.security.NoSuchAlgorithmException;
  */
 @Slf4j
 @RestController
-@RequestMapping("/files")
+@RequestMapping("/oss")
 public class OssController {
 
     @Autowired
-    DefaultOssTemplate defaultOssTemplate;
+    private AliyunOssTemplate aliyunOssTemplate;
+    @Autowired
+    private OSS oss;
 
-    @GetMapping("/images")
-    public Object getImage() throws IOException, InvalidKeyException, NoSuchAlgorithmException, XmlPullParserException, InternalException, NoResponseException, InvalidBucketNameException, InsufficientDataException, ErrorResponseException {
-        defaultOssTemplate.bucketExists("111");
-        return "";
+    @GetMapping("/signature")
+    public Object getSign() {
+        return aliyunOssTemplate.getUploadToken("telemedicine-files", 111 + "");
     }
 
-    @PostMapping("/images")
-    public Object postImage(@RequestParam("file") MultipartFile file) throws IOException, InvalidKeyException, NoSuchAlgorithmException, XmlPullParserException, InvalidArgumentException, InternalException, InvalidObjectPrefixException, NoResponseException, InvalidBucketNameException, InsufficientDataException, ErrorResponseException, RegionConflictException {
-        OssFile ossFile = defaultOssTemplate.uploadFile(file);
-        return ossFile.getLink();
+    @PostMapping("/file")
+    public Object postFile(@RequestParam("file") MultipartFile file) throws IOException {
+        return oss.putObject("telemedicine-files", "file56565", file.getInputStream());
     }
 
-    @DeleteMapping("/images")
-    public Object postImage(String key) throws IOException, InvalidKeyException, NoSuchAlgorithmException, XmlPullParserException, InvalidArgumentException, InternalException, NoResponseException, InvalidBucketNameException, InsufficientDataException, ErrorResponseException {
-        log.info("postImage");
-        defaultOssTemplate.deleteFile(key);
-        return "";
+    @DeleteMapping("/file")
+    public Object deleteFile(String key) {
+        oss.deleteObject("telemedicine-files", 111 + "");
+        return "OK";
     }
 }

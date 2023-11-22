@@ -1,46 +1,44 @@
-//package com.fight2048.oss.autoconfigure.minio;
-//
-//import com.fight2048.oss.DefaultOssTemplate;
-//import com.fight2048.oss.autoconfigure.OssAutoConfiguration;
-//import com.fight2048.oss.autoconfigure.OssProperties;
-//import com.fight2048.oss.support.minio.MinIoTemplate;
-//import io.minio.MinioClient;
-//import io.minio.errors.InvalidEndpointException;
-//import io.minio.errors.InvalidPortException;
-//import org.springframework.boot.autoconfigure.AutoConfigureBefore;
-//import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
-//import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
-//import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
-//import org.springframework.boot.context.properties.EnableConfigurationProperties;
-//import org.springframework.context.annotation.Bean;
-//import org.springframework.context.annotation.Configuration;
-//
-//@Configuration
-//@AutoConfigureBefore(OssAutoConfiguration.class)
-//@EnableConfigurationProperties(OssProperties.class)
-//@ConditionalOnProperty(value = "oss.min-io.enabled", havingValue = "true")
-//public class MinIoAutoConfiguration {
-//
-//    @Bean
-//    @ConditionalOnMissingBean
-//    public MinioClient minioClient(OssProperties ossProperties) throws InvalidPortException, InvalidEndpointException {
-//        OssProperties.MinIoProperties properties = ossProperties.getMinIo();
-//        return new MinioClient(properties.getEndpoint(),
-//                properties.getAccessKey(),
-//                properties.getSecretKey());
-//    }
-//
-//    @Bean
-//    @ConditionalOnMissingBean
-//    @ConditionalOnBean({MinioClient.class})
-//    public MinIoTemplate minIoTemplate(MinioClient minioClient, OssProperties ossProperties) {
-//        return new MinIoTemplate(minioClient, ossProperties);
-//    }
-//
-//    @Bean
-//    @ConditionalOnMissingBean
-//    @ConditionalOnBean({MinIoTemplate.class})
-//    public DefaultOssTemplate minIoOssTemplate(MinIoTemplate template) {
-//        return new DefaultOssTemplate(template);
-//    }
-//}
+package com.fight2048.oss.autoconfigure.minio;
+
+import com.fight2048.oss.OssProperties;
+import com.fight2048.oss.autoconfigure.OssAutoConfiguration;
+import io.minio.MinioClient;
+import org.springframework.boot.autoconfigure.AutoConfigureBefore;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+
+/**
+ * @author: fight2048
+ * @e-mail: fight2048@outlook.com
+ * @blog: https://github.com/fight2048
+ * @time: 2020-03-07 0007 下午 10:46
+ * @version: v0.0.0
+ * @description:
+ */
+@Configuration
+@AutoConfigureBefore(OssAutoConfiguration.class)
+@EnableConfigurationProperties(OssProperties.class)
+@ConditionalOnProperty(value = "oss.minio.enabled", havingValue = "true")
+public class MinIoAutoConfiguration {
+
+    @Bean
+    @ConditionalOnMissingBean
+    public MinioClient minioClient(OssProperties ossProperties) {
+        OssProperties.MinIoProperties properties = ossProperties.getMinio();
+        return MinioClient.builder()
+                .endpoint(properties.getEndpoint())
+                .credentials(properties.getAccessKey(), properties.getSecretKey())
+                .build();
+    }
+
+    @Bean
+    @ConditionalOnMissingBean
+    @ConditionalOnBean({MinioClient.class})
+    public MinIoTemplate minIoTemplate(MinioClient minioClient, OssProperties ossProperties) {
+        return new MinIoTemplate(minioClient, ossProperties);
+    }
+}

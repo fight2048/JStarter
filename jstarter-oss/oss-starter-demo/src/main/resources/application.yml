@@ -3,17 +3,60 @@ spring:
     ansi:
       enabled: ALWAYS
   servlet:
-      multipart:
-        max-file-size: 10MB
-        max-request-size: 100MB
+    multipart:
+      max-file-size: 10MB
+      max-request-size: 100MB
 server:
   port: 8012
+
 #OSS配置
 oss:
-  aliyun-oss:
-    access-key: 这里填写你的access key
-    secret-key: 这里填写你的secret key
-    bucket-name: turing-cloud-test
+  aliyun:
+    access-key: LTAI5tFgdimsSzDxdc8d5iAT
+    secret-key: 2OHLhMwtL5WcWo7XU5ai3K5feQabCz
+    bucket-name: telemedicine-files
     enabled: true
     endpoint: oss-cn-shenzhen.aliyuncs.com
-    https: true
+    scheme: https
+#  # 七牛云配置
+#  qiniu:
+#    access-key: 这里填写你的access key
+#    secret-key: 这里填写你的secret key
+#    bucket-name: turing-cloud-test
+#    enabled: true
+#    endpoint: 这里填写你的endpoint
+#    scheme: https
+#    domain: 这里填写你的domain
+#    prefix: 这里填写你的prefix
+#  # 腾讯云配置
+#  tencent:
+#    secret-id: 这里填写你的secret id
+#    secret-key: 这里填写你的secret key
+#    bucket-name: turing-cloud-test
+#    enabled: true
+#    endpoint: 这里填写你的endpoint
+#    scheme: https
+#  # 华为云配置
+#  huawei:
+#    access-key: 这里填写你的access key
+#    secret-key: 这里填写你的secret key
+#    bucket-name: turing-cloud-test
+#    enabled: true
+#    endpoint: 这里填写你的endpoint
+#    scheme: https
+#  # 百度云配置
+#  baidu:
+#    access-key: 这里填写你的access key
+#    secret-key: 这里填写你的secret key
+#    bucket-name: turing-cloud-test
+#    enabled: true
+#    endpoint: 这里填写你的endpoint
+#    scheme: https
+#  # 又拍云配置
+#  upyun:
+#    operator-name: 这里填写你的operator name
+#    operator-password: 这里填写你的operator password
+#    bucket-name: turing-cloud-test
+#    enabled: true
+#    endpoint: 这里填写你的endpoint
+#    scheme: https

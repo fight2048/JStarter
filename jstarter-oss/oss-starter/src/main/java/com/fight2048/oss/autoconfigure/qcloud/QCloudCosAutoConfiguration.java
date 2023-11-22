@@ -1,9 +1,7 @@
 package com.fight2048.oss.autoconfigure.qcloud;
 
-import com.fight2048.oss.DefaultOssTemplate;
+import com.fight2048.oss.OssProperties;
 import com.fight2048.oss.autoconfigure.OssAutoConfiguration;
-import com.fight2048.oss.autoconfigure.OssProperties;
-import com.fight2048.oss.support.qcloud.QCloudCosTemplate;
 import com.qcloud.cos.COSClient;
 import com.qcloud.cos.ClientConfig;
 import com.qcloud.cos.auth.BasicCOSCredentials;
@@ -19,7 +17,7 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration
 @AutoConfigureBefore(OssAutoConfiguration.class)
-@ConditionalOnProperty(value = "oss.qcloud-cos.enabled", havingValue = "true")
+@ConditionalOnProperty(value = "oss.qcloud.enabled", havingValue = "true")
 @EnableConfigurationProperties(OssProperties.class)
 public class QCloudCosAutoConfiguration {
 
@@ -27,10 +25,8 @@ public class QCloudCosAutoConfiguration {
     @ConditionalOnMissingBean
     public COSClient cosClient(OssProperties ossProperties) {
         // 1 初始化用户身份信息（secretId, secretKey）
-        OssProperties.QcloudCosProperties properties = ossProperties.getQcloudCos();
-        COSCredentials credentials = new BasicCOSCredentials(properties.getAccessKey(),
-                properties.getSecretKey());
-
+        OssProperties.QcloudCosProperties properties = ossProperties.getTencent();
+        COSCredentials credentials = new BasicCOSCredentials(properties.getAccessKey(), properties.getSecretKey());
         // 2 设置 bucket 的区域, COS 地域的简称请参照 https://cloud.tencent.com/document/product/436/6224
         Region region = new Region(properties.getRegion());
 
@@ -39,9 +35,9 @@ public class QCloudCosAutoConfiguration {
         // 设置OSSClient允许打开的最大HTTP连接数，默认为1024个。
         clientConfig.setMaxConnectionsCount(1024);
         // 设置Socket层传输数据的超时时间，默认为50000毫秒。
-        clientConfig.setSocketTimeout(50000);
+        clientConfig.setSocketTimeout(50 * 1000);
         // 设置建立连接的超时时间，默认为50000毫秒。
-        clientConfig.setConnectionTimeout(50000);
+        clientConfig.setConnectionTimeout(50 * 1000);
         // 设置从连接池中获取连接的超时时间（单位：毫秒），默认不超时。
         clientConfig.setConnectionRequestTimeout(1000);
         return new COSClient(credentials, clientConfig);
@@ -52,12 +48,5 @@ public class QCloudCosAutoConfiguration {
     @ConditionalOnBean({COSClient.class})
     public QCloudCosTemplate qcloudCosTemplate(COSClient cosClient, OssProperties ossProperties) {
         return new QCloudCosTemplate(cosClient, ossProperties);
-    }
-
-    @Bean
-    @ConditionalOnMissingBean
-    @ConditionalOnBean({QCloudCosTemplate.class})
-    public DefaultOssTemplate qcloudOssTemplate(QCloudCosTemplate template) {
-        return new DefaultOssTemplate(template);
     }
 }

@@ -1,9 +1,7 @@
 package com.fight2048.oss.autoconfigure.qiniu;
 
-import com.fight2048.oss.DefaultOssTemplate;
 import com.fight2048.oss.autoconfigure.OssAutoConfiguration;
-import com.fight2048.oss.autoconfigure.OssProperties;
-import com.fight2048.oss.support.qiniu.QiniuCloudTemplate;
+import com.fight2048.oss.OssProperties;
 import com.qiniu.common.Zone;
 import com.qiniu.storage.BucketManager;
 import com.qiniu.storage.UploadManager;
@@ -19,7 +17,7 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 @AutoConfigureBefore(OssAutoConfiguration.class)
 @EnableConfigurationProperties(OssProperties.class)
-@ConditionalOnProperty(value = "oss.qiniu-cloud.enabled", havingValue = "true")
+@ConditionalOnProperty(value = "oss.qiniu.enabled", havingValue = "true")
 public class QiniuCloudAutoConfiguration {
 
     @Bean
@@ -30,7 +28,7 @@ public class QiniuCloudAutoConfiguration {
 
     @Bean
     public Auth auth(OssProperties ossProperties) {
-        OssProperties.QiniuProperties properties = ossProperties.getQiniuCloud();
+        OssProperties.QiniuProperties properties = ossProperties.getQiniu();
         return Auth.create(properties.getAccessKey(), properties.getSecretKey());
     }
 
@@ -54,12 +52,5 @@ public class QiniuCloudAutoConfiguration {
                                                  BucketManager bucketManager,
                                                  OssProperties ossProperties) {
         return new QiniuCloudTemplate(auth, uploadManager, bucketManager, ossProperties);
-    }
-
-    @Bean
-    @ConditionalOnMissingBean
-    @ConditionalOnBean({QiniuCloudTemplate.class})
-    public DefaultOssTemplate qiniuOssTemplate(QiniuCloudTemplate template) {
-        return new DefaultOssTemplate(template);
     }
 }
