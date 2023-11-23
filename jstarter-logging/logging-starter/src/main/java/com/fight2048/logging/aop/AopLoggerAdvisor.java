@@ -30,8 +30,8 @@ public class AopLoggerAdvisor extends StaticMethodMatcherPointcutAdvisor {
     private ApplicationEventPublisher eventPublisher;
 
     public AopLoggerAdvisor() {
-        MethodInterceptor methodInterceptor = invocation -> {
-            MethodInterceptorHolder methodInterceptorHolder = MethodInterceptorHolder.create(invocation);
+        MethodInterceptor methodInterceptor = (invocation) -> {
+            MethodInterceptorHolder methodInterceptorHolder = MethodInterceptorHolder.of(invocation);
             LoggerMetadate metadate = createLogger(methodInterceptorHolder);
             Object response;
             try {
@@ -63,7 +63,7 @@ public class AopLoggerAdvisor extends StaticMethodMatcherPointcutAdvisor {
         if (Objects.nonNull(tag)) {
             metadate.setAction(tag.getAction());
         }
-        metadate.setParameters(holder.getNamedArguments());
+        metadate.setParameters(holder.getParameters());
         metadate.setTarget(holder.getTarget().getClass());
         metadate.setMethod(holder.getMethod());
 
@@ -102,7 +102,7 @@ public class AopLoggerAdvisor extends StaticMethodMatcherPointcutAdvisor {
     }
 
     public static Map<String, String> getHeaders(HttpServletRequest request) {
-        Map<String, String> map = new LinkedHashMap<>();
+        Map<String, String> map = new HashMap<>();
         Enumeration<String> enumeration = request.getHeaderNames();
         while (enumeration.hasMoreElements()) {
             String key = enumeration.nextElement();

@@ -1,8 +1,8 @@
 package com.fight2048.logging.parser;
 
 import org.aopalliance.intercept.MethodInvocation;
-import org.springframework.core.LocalVariableTableParameterNameDiscoverer;
 import org.springframework.core.ParameterNameDiscoverer;
+import org.springframework.core.StandardReflectionParameterNameDiscoverer;
 import org.springframework.core.annotation.AnnotationUtils;
 import org.springframework.lang.Nullable;
 import org.springframework.util.ClassUtils;
@@ -14,19 +14,19 @@ import java.util.*;
 import java.util.concurrent.atomic.AtomicReference;
 
 public class MethodInterceptorHolder {
-    public static final ParameterNameDiscoverer nameDiscoverer = new LocalVariableTableParameterNameDiscoverer();
+    public static final ParameterNameDiscoverer nameDiscoverer = new StandardReflectionParameterNameDiscoverer();
     private final Method method;
     private final Object target;
-    private final Object[] arguments;
-    private final String[] argumentsNames;
-    private Map<String, Object> namedArguments;
+    private final Object[] parameterValues;
+    private final String[] parameterNames;
+    private Map<String, Object> parameters;
 
-    public MethodInterceptorHolder(Method method, Object target, Object[] arguments, String[] argumentsNames, Map<String, Object> namedArguments) {
+    public MethodInterceptorHolder(Method method, Object target,
+                                   Object[] parameterValues, String[] parameterNames) {
         this.method = method;
         this.target = target;
-        this.arguments = arguments;
-        this.argumentsNames = argumentsNames;
-        this.namedArguments = namedArguments;
+        this.parameterValues = parameterValues;
+        this.parameterNames = parameterNames;
     }
 
     public Method getMethod() {
@@ -37,28 +37,28 @@ public class MethodInterceptorHolder {
         return target;
     }
 
-    public Object[] getArguments() {
-        return arguments;
+    public Object[] getParameterValues() {
+        return parameterValues;
     }
 
-    public String[] getArgumentsNames() {
-        return argumentsNames;
+    public String[] getParameterNames() {
+        return parameterNames;
     }
 
-    public void setNamedArguments(Map<String, Object> namedArguments) {
-        this.namedArguments = namedArguments;
+    public void setParameters(Map<String, Object> parameters) {
+        this.parameters = parameters;
     }
 
-    protected Map<String, Object> createNamedArguments() {
-        Map<String, Object> namedArguments = new LinkedHashMap<>(arguments.length);
-        for (int i = 0, len = arguments.length; i < len; i++) {
-            namedArguments.put(argumentsNames[i], arguments[i]);
+    protected Map<String, Object> createParameters() {
+        Map<String, Object> namedArguments = new HashMap<>(parameterValues.length);
+        for (int i = 0, len = parameterValues.length; i < len; i++) {
+            namedArguments.put(parameterNames[i], parameterValues[i]);
         }
         return namedArguments;
     }
 
-    public Map<String, Object> getNamedArguments() {
-        return namedArguments == null ? namedArguments = createNamedArguments() : namedArguments;
+    public Map<String, Object> getParameters() {
+        return parameters == null ? parameters = createParameters() : parameters;
     }
 
     public <T extends Annotation> T findMethodAnnotation(@Nullable Class<T> annotationType) {
@@ -76,26 +76,25 @@ public class MethodInterceptorHolder {
     /**
      * 参数名称获取器,用于获取方法参数的名称
      */
-    public static MethodInterceptorHolder create(MethodInvocation invocation) {
-        String[] argNames = nameDiscoverer.getParameterNames(invocation.getMethod());
-        Object[] args = invocation.getArguments();
+    public static MethodInterceptorHolder of(MethodInvocation invocation) {
+        String[] parameterNames = nameDiscoverer.getParameterNames(invocation.getMethod());
+        Object[] parameterValues = invocation.getArguments();
 
         String[] names;
-        //参数名与参数长度不一致，则填充argx来作为参数名
-        if (argNames == null || argNames.length != args.length) {
-            names = new String[args.length];
-            for (int i = 0, len = args.length; i < len; i++) {
-                names[i] = (argNames == null || argNames.length <= i || argNames[i] == null) ? "arg" + i : argNames[i];
+        //参数名与参数长度不一致，则填充argument+数字序号来作为参数名
+        if (parameterNames == null
+                || parameterNames.length != parameterValues.length) {
+            names = new String[parameterValues.length];
+            for (int i = 0, len = parameterValues.length; i < len; i++) {
+                names[i] = (parameterNames == null || parameterNames.length <= i || parameterNames[i] == null) ? "argument" + i : parameterNames[i];
             }
         } else {
-            names = argNames;
+            names = parameterNames;
         }
         return new MethodInterceptorHolder(
                 invocation.getMethod(),
                 invocation.getThis(),
-                args,
-                names,
-                null
+                parameterValues, names
         );
     }
 

@@ -6,7 +6,7 @@ import java.io.PrintWriter;
 import java.io.Serializable;
 import java.io.StringWriter;
 import java.lang.reflect.Method;
-import java.util.LinkedHashMap;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.StringJoiner;
 import java.util.function.Function;
@@ -190,7 +190,7 @@ public class LoggerMetadate {
             map.put("method", methodAppender.toString());
         }
         map.put("target", target != null ? target.getName() : "");
-        Map<String, Object> newParameter = new LinkedHashMap<>(parameters);
+        Map<String, Object> newParameter = new HashMap<>(parameters);
         newParameter.entrySet().forEach(entry -> {
             if (entry.getValue() != null) {
                 entry.setValue(objectFilter.apply(entry.getValue()));

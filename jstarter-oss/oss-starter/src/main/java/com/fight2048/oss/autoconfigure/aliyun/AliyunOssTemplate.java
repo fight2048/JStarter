@@ -357,7 +357,7 @@ public class AliyunOssTemplate {
         String encodedPolicy = BinaryUtil.toBase64String(binaryData);
         String signature = ossClient.calculatePostSignature(postPolicy);
 
-        Map<String, Object> map = new LinkedHashMap<>(16);
+        Map<String, Object> map = new HashMap<>(16);
         map.put("accessId", properties.getAccessKey());
         map.put("policy", encodedPolicy);
         map.put("signature", signature);
