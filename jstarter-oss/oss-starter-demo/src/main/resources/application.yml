@@ -12,11 +12,11 @@ server:
 #OSS配置
 oss:
   aws:
-    access-key: admin
-    secret-key: 12345678
-    bucket-name: env-disinfect
+    access-key: 这里填写你的access key
+    secret-key: 这里填写你的secret key
+    bucket-name: turing-cloud-test
     enabled: true
-    endpoint: http://39.103.203.92:8100
+    endpoint: 这里填写你的endpoint
 #  aliyun:
 #    access-key: 这里填写你的access key
 #    secret-key: 这里填写你的secret key
