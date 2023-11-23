@@ -6,6 +6,7 @@ import com.fight2048.logging.event.LoggerAfterEvent;
 import com.fight2048.logging.event.LoggerBeforeEvent;
 import com.fight2048.logging.parser.LoggerParser;
 import com.fight2048.logging.parser.MethodInterceptorHolder;
+import jakarta.servlet.http.HttpServletRequest;
 import org.aopalliance.intercept.MethodInterceptor;
 import org.springframework.aop.support.StaticMethodMatcherPointcutAdvisor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +17,6 @@ import org.springframework.util.StringUtils;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
-import javax.servlet.http.HttpServletRequest;
 import java.lang.reflect.Method;
 import java.util.*;
 

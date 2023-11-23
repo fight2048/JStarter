@@ -108,9 +108,9 @@ public class MqttAutoConfguration {
         adapter.setConverter(new DefaultPahoMessageConverter());
         adapter.setQos(inbound.getQos());
 
-        if (Objects.nonNull(mqttProperties.getKeepAliveInterval())) {
-            adapter.setRecoveryInterval(mqttProperties.getKeepAliveInterval());
-        }
+//        if (Objects.nonNull(mqttProperties.getKeepAliveInterval())) {
+//            adapter.setRecoveryInterval(mqttProperties.getKeepAliveInterval());
+//        }
 
         if (Objects.nonNull(mqttProperties.getConnectionTimeout())) {
             adapter.setCompletionTimeout(mqttProperties.getConnectionTimeout());
