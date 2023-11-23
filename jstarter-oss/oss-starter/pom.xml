@@ -23,6 +23,7 @@
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <java.version>17</java.version>
         <official.site>http://fight2048.com</official.site>
+        <aws.version>1.12.423</aws.version>
         <aliyun.oss.version>3.17.1</aliyun.oss.version>
         <qcloud.oss.version>5.6.161</qcloud.oss.version>
         <qiniu.oss.version>7.14.0</qiniu.oss.version>
@@ -31,6 +32,13 @@
 
     <dependencyManagement>
         <dependencies>
+            <!--亚马逊云-->
+            <dependency>
+                <groupId>com.amazonaws</groupId>
+                <artifactId>aws-java-sdk-s3</artifactId>
+                <version>${aws.version}</version>
+            </dependency>
+
             <!-- 阿里云OSS -->
             <dependency>
                 <groupId>com.aliyun.oss</groupId>
@@ -87,6 +95,13 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-configuration-processor</artifactId>
             <optional>true</optional>
+        </dependency>
+
+        <!--亚马逊云-->
+        <dependency>
+            <groupId>com.amazonaws</groupId>
+            <artifactId>aws-java-sdk-s3</artifactId>
+            <scope>provided</scope>
         </dependency>
 
         <!--阿里云OSS-->

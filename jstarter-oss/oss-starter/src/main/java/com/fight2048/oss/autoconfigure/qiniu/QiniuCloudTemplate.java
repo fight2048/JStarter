@@ -66,34 +66,34 @@ public class QiniuCloudTemplate {
      * 拷贝文件
      *
      * @param sourceBucketName 源存储桶名称
-     * @param fileName         存储桶文件名称
+     * @param key         存储桶文件名称
      * @param targetBucketName 目标存储桶名称
      */
-    public Response copyObject(String sourceBucketName, String fileName, String targetBucketName) {
-        return copyObject(sourceBucketName, fileName, targetBucketName, fileName);
+    public Response copyObject(String sourceBucketName, String key, String targetBucketName) {
+        return copyObject(sourceBucketName, key, targetBucketName, key);
     }
 
     /**
      * 拷贝文件，重命名
      *
      * @param sourceBucketName 源存储桶名称
-     * @param fileName         存储桶文件名称
+     * @param sourceKey         存储桶文件名称
      * @param targetBucketName 目标存储桶名称
-     * @param targetFileName   目标存储桶文件名称
+     * @param targetKey   目标存储桶文件名称
      */
     @SneakyThrows
-    public Response copyObject(String sourceBucketName, String fileName, String targetBucketName, String targetFileName) {
-        return bucketManager.copy(sourceBucketName, fileName, targetBucketName, targetFileName);
+    public Response copyObject(String sourceBucketName, String sourceKey, String targetBucketName, String targetKey) {
+        return bucketManager.copy(sourceBucketName, sourceKey, targetBucketName, targetKey);
     }
 
     /**
      * 获取文件元信息
      *
-     * @param fileName 存储桶文件名称
+     * @param key 存储桶文件名称
      * @return 文件元信息
      */
-    public FileInfo getMetadata(String fileName) throws QiniuException {
-        return getMetadata(getBucketName(), fileName);
+    public FileInfo getMetadata(String key) throws QiniuException {
+        return getMetadata(getBucketName(), key);
     }
 
     /**
@@ -174,26 +174,26 @@ public class QiniuCloudTemplate {
     /**
      * 删除文件
      *
-     * @param fileName 存储桶对象名称
+     * @param key 存储桶对象名称
      */
-    public void deleteObject(String fileName) throws QiniuException {
-        bucketManager.delete(getBucketName(), fileName);
+    public void deleteObject(String key) throws QiniuException {
+        bucketManager.delete(getBucketName(), key);
     }
 
     /**
      * 删除文件
      *
      * @param bucketName 存储桶名称
-     * @param fileName   存储桶对象名称
+     * @param key   存储桶对象名称
      */
-    public void deleteObject(String bucketName, String fileName) throws QiniuException {
-        bucketManager.delete(bucketName, fileName);
+    public void deleteObject(String bucketName, String key) throws QiniuException {
+        bucketManager.delete(bucketName, key);
     }
 
     /**
      * 批量删除文件
      *
-     * @param fileNames 存储桶对象名称集合
+     * @param keys 存储桶对象名称集合
      */
     public Response deleteObjects(String... keys) throws QiniuException {
         return deleteObjects(getBucketName(), keys);
@@ -203,7 +203,7 @@ public class QiniuCloudTemplate {
      * 批量删除文件
      *
      * @param bucketName 存储桶名称
-     * @param fileNames  存储桶对象名称集合
+     * @param keys  存储桶对象名称集合
      */
     public Response deleteObjects(String bucketName, String... keys) throws QiniuException {
         //创建 BatchOperations 类型的 operations 对象

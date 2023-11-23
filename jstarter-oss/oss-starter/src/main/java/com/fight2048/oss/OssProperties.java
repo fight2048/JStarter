@@ -91,6 +91,11 @@ public class OssProperties {
     }
 
     /**
+     * 亚马逊云AWS OSS
+     */
+    private AwsOssProperties aws = new AwsOssProperties();
+
+    /**
      * 阿里云 OSS
      */
     private AliyunOssProperties aliyun = new AliyunOssProperties();
@@ -99,13 +104,21 @@ public class OssProperties {
      */
     private QcloudCosProperties tencent = new QcloudCosProperties();
     /**
-     * 七牛云
+     * 七牛云OSS
      */
     private QiniuProperties qiniu = new QiniuProperties();
     /**
-     * MinIO
+     * MinIO OSS
      */
     private MinIoProperties minio = new MinIoProperties();
+
+    public AwsOssProperties getAws() {
+        return aws;
+    }
+
+    public void setAws(AwsOssProperties aws) {
+        this.aws = aws;
+    }
 
     public AliyunOssProperties getAliyun() {
         return aliyun;
@@ -137,6 +150,39 @@ public class OssProperties {
 
     public void setMinio(MinIoProperties minio) {
         this.minio = minio;
+    }
+
+    /**
+     * 亚马逊云AWS OSS 配置
+     */
+    public static class AwsOssProperties extends CommonProperties {
+        /**
+         * 区域简称，https://docs.aws.amazon.com/zh_cn/AmazonS3/latest/userguide/CreatingMultiRegionAccessPoints.html
+         */
+        private String region;
+
+        /**
+         * true path-style nginx 反向代理和S3默认支持 pathStyle模式 {http://endpoint/bucketname}
+         * false supports virtual-hosted-style 阿里云等需要配置为 virtual-hosted-style 模式{http://bucketname.endpoint}
+         * 只是url的显示不一样
+         */
+        private Boolean pathStyleAccess = true;
+
+        public String getRegion() {
+            return region;
+        }
+
+        public void setRegion(String region) {
+            this.region = region;
+        }
+
+        public Boolean getPathStyleAccess() {
+            return pathStyleAccess;
+        }
+
+        public void setPathStyleAccess(Boolean pathStyleAccess) {
+            this.pathStyleAccess = pathStyleAccess;
+        }
     }
 
     /**

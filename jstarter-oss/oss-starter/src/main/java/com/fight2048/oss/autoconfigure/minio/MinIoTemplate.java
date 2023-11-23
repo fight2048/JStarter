@@ -131,11 +131,11 @@ public class MinIoTemplate {
     /**
      * 获取文件元信息
      *
-     * @param fileName 存储桶文件名称
+     * @param key 存储桶文件名称
      * @return 文件元信息
      */
-    public StatObjectResponse getMetadata(String fileName) {
-        return getMetadata(getBucketName(), fileName);
+    public StatObjectResponse getMetadata(String key) {
+        return getMetadata(getBucketName(), key);
     }
 
     /**

@@ -69,11 +69,11 @@ public class QCloudCosTemplate {
      * 拷贝文件
      *
      * @param sourceBucketName 源存储桶名称
-     * @param fileName         存储桶文件名称
+     * @param key         存储桶文件名称
      * @param targetBucketName 目标存储桶名称
      */
-    public CopyObjectResult copyObject(String sourceBucketName, String fileName, String targetBucketName) {
-        return copyObject(sourceBucketName, fileName, targetBucketName, fileName);
+    public CopyObjectResult copyObject(String sourceBucketName, String key, String targetBucketName) {
+        return copyObject(sourceBucketName, key, targetBucketName, key);
     }
 
     /**
@@ -93,22 +93,22 @@ public class QCloudCosTemplate {
     /**
      * 获取文件元信息
      *
-     * @param fileName 存储桶文件名称
+     * @param key 存储桶文件名称
      * @return 文件元信息
      */
-    public ObjectMetadata getMetadata(String fileName) {
-        return getMetadata(getBucketName(), fileName);
+    public ObjectMetadata getMetadata(String key) {
+        return getMetadata(getBucketName(), key);
     }
 
     /**
      * 获取文件元信息
      *
      * @param bucketName 存储桶名称
-     * @param fileName   存储桶文件名称
+     * @param key   存储桶文件名称
      * @return 文件元信息
      */
-    public ObjectMetadata getMetadata(String bucketName, String fileName) {
-        return cosClient.getObjectMetadata(bucketName, fileName);
+    public ObjectMetadata getMetadata(String bucketName, String key) {
+        return cosClient.getObjectMetadata(bucketName, key);
     }
 
     /**

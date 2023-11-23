@@ -155,24 +155,24 @@ public class AliyunOssTemplate {
     /**
      * 获取文件相对路径
      *
-     * @param fileName 存储桶对象名称
+     * @param key 存储桶对象名称
      * @return 文件相对路径
      */
-    public String getObjectPath(String fileName) {
+    public String getObjectPath(String key) {
         return getBucketName().concat("/")
-                .concat(fileName);
+                .concat(key);
     }
 
     /**
      * 获取文件相对路径
      *
      * @param bucketName 存储桶名称
-     * @param fileName   存储桶对象名称
+     * @param key   存储桶对象名称
      * @return 文件相对路径
      */
-    public String getObjectPath(String bucketName, String fileName) {
+    public String getObjectPath(String bucketName, String key) {
         return bucketName.concat("/")
-                .concat(fileName);
+                .concat(key);
     }
 
 
@@ -210,13 +210,13 @@ public class AliyunOssTemplate {
     /**
      * 上传文件
      *
-     * @param fileName 上传文件名
+     * @param key 上传文件名
      * @param file     上传文件类
      * @return 文件信息
      */
-    public PutObjectResult upload(String fileName, MultipartFile file) {
+    public PutObjectResult upload(String key, MultipartFile file) {
         return upload(ossProperties.getAliyun()
-                .getBucketName(), fileName, file);
+                .getBucketName(), key, file);
     }
 
     /**
@@ -246,20 +246,20 @@ public class AliyunOssTemplate {
     /**
      * 删除文件
      *
-     * @param fileName 存储桶对象名称
+     * @param key 存储桶对象名称
      */
-    public void deleteObject(String fileName) {
-        ossClient.deleteObject(getBucketName(), fileName);
+    public void deleteObject(String key) {
+        ossClient.deleteObject(getBucketName(), key);
     }
 
     /**
      * 删除文件
      *
      * @param bucketName 存储桶名称
-     * @param fileName   存储桶对象名称
+     * @param key   存储桶对象名称
      */
-    public void deleteObject(String bucketName, String fileName) {
-        ossClient.deleteObject(bucketName, fileName);
+    public void deleteObject(String bucketName, String key) {
+        ossClient.deleteObject(bucketName, key);
     }
 
     /**
