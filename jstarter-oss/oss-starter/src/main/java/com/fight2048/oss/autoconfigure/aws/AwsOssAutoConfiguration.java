@@ -1,6 +1,5 @@
 package com.fight2048.oss.autoconfigure.aws;
 
-import com.aliyun.oss.OSS;
 import com.amazonaws.ClientConfiguration;
 import com.amazonaws.auth.AWSCredentials;
 import com.amazonaws.auth.AWSCredentialsProvider;
@@ -30,19 +29,19 @@ public class AwsOssAutoConfiguration {
     public AmazonS3 amazonS3(OssProperties ossProperties) {
         OssProperties.AwsOssProperties properties = ossProperties.getAws();
         // 客户端配置，主要是全局的配置信息
-        ClientConfiguration clientConfiguration = new ClientConfiguration();
+        ClientConfiguration configuration = new ClientConfiguration();
         // url以及region配置
         AwsClientBuilder.EndpointConfiguration endpointConfiguration = new AwsClientBuilder.EndpointConfiguration(
                 properties.getEndpoint(), properties.getRegion());
         // 凭证配置
-        AWSCredentials awsCredentials = new BasicAWSCredentials(properties.getAccessKey(),
+        AWSCredentials credentials = new BasicAWSCredentials(properties.getAccessKey(),
                 properties.getSecretKey());
-        AWSCredentialsProvider awsCredentialsProvider = new AWSStaticCredentialsProvider(awsCredentials);
+        AWSCredentialsProvider provider = new AWSStaticCredentialsProvider(credentials);
         // build amazonS3Client客户端
         return AmazonS3Client.builder()
+                .withClientConfiguration(configuration)
                 .withEndpointConfiguration(endpointConfiguration)
-                .withClientConfiguration(clientConfiguration)
-                .withCredentials(awsCredentialsProvider)
+                .withCredentials(provider)
                 .disableChunkedEncoding()
                 .withPathStyleAccessEnabled(properties.getPathStyleAccess())
                 .build();
@@ -50,7 +49,7 @@ public class AwsOssAutoConfiguration {
 
     @Bean
     @ConditionalOnMissingBean
-    @ConditionalOnBean({OSS.class})
+    @ConditionalOnBean({AmazonS3.class})
     public AwsOssTemplate awsOssTemplate(AmazonS3 amazonS3, OssProperties ossProperties) {
         return new AwsOssTemplate(amazonS3, ossProperties);
     }

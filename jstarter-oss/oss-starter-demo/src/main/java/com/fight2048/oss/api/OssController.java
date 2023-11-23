@@ -1,7 +1,7 @@
 package com.fight2048.oss.api;
 
-import com.aliyun.oss.OSS;
-import com.fight2048.oss.autoconfigure.aliyun.AliyunOssTemplate;
+import com.amazonaws.services.s3.AmazonS3;
+import com.fight2048.oss.autoconfigure.aws.AwsOssTemplate;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -23,23 +23,23 @@ import java.io.IOException;
 public class OssController {
 
     @Autowired
-    private AliyunOssTemplate aliyunOssTemplate;
+    private AmazonS3 amazonS3;
     @Autowired
-    private OSS oss;
+    private AwsOssTemplate template;
 
     @GetMapping("/signature")
     public Object getSign() {
-        return aliyunOssTemplate.getUploadToken("telemedicine-files", 111 + "");
+        return template.getObjectURL("telemedicine-files", 111 + "");
     }
 
     @PostMapping("/file")
     public Object postFile(@RequestParam("file") MultipartFile file) throws IOException {
-        return oss.putObject("telemedicine-files", "file56565", file.getInputStream());
+        return template.upload("file56565", file.getInputStream());
     }
 
     @DeleteMapping("/file")
     public Object deleteFile(String key) {
-        oss.deleteObject("telemedicine-files", key);
+        amazonS3.deleteObject("telemedicine-files", key);
         return "OK";
     }
 }
