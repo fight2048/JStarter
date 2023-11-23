@@ -7,6 +7,7 @@ import com.fight2048.oss.OssProperties;
 import lombok.SneakyThrows;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
 import java.time.Duration;
@@ -134,87 +135,101 @@ public class AwsOssTemplate {
      * 获取文件外链，只用于下载
      *
      * @param bucketName bucket名称
-     * @param objectName 文件名称
-     * @param minutes    过期时间，单位分钟,请注意该值必须小于7天
+     * @param key        文件名称
+     * @param seconds    过期时间，单位秒,请注意该值必须小于7天
      * @return url
      * @see AmazonS3#generatePresignedUrl(String bucketName, String key, Date expiration)
      */
-    public String getObjectURL(String bucketName, String objectName, int minutes) {
-        return getObjectURL(bucketName, objectName, Duration.ofMinutes(minutes));
+    public String getObjectUrl(String bucketName, String key, int seconds) {
+        return getObjectUrl(bucketName, key, Duration.ofSeconds(seconds));
     }
 
     /**
      * 获取文件外链，只用于下载
      *
      * @param bucketName bucket名称
-     * @param objectName 文件名称
+     * @param key        文件名称
      * @param expires    过期时间,请注意该值必须小于7天
      * @return url
      * @see AmazonS3#generatePresignedUrl(String bucketName, String key, Date expiration)
      */
-    public String getObjectURL(String bucketName, String objectName, Duration expires) {
-        return getObjectURL(bucketName, objectName, expires, HttpMethod.GET);
+    public String getObjectUrl(String bucketName, String key, Duration expires) {
+        return getSignedUrl(bucketName, key, expires, HttpMethod.GET);
     }
 
     /**
      * 获取文件上传外链，只用于上传
      *
      * @param bucketName bucket名称
-     * @param objectName 文件名称
-     * @param minutes    过期时间，单位分钟,请注意该值必须小于7天
+     * @param key        文件名称
+     * @param seconds    过期时间，单位秒,请注意该值必须小于7天
      * @return url
      * @see AmazonS3#generatePresignedUrl(String bucketName, String key, Date expiration)
      */
-    public String getPutObjectURL(String bucketName, String objectName, int minutes) {
-        return getPutObjectURL(bucketName, objectName, Duration.ofMinutes(minutes));
+    public String getUploadUrl(String bucketName, String key, long seconds) {
+        return getUploadUrl(bucketName, key, Duration.ofSeconds(seconds));
     }
 
     /**
      * 获取文件上传外链，只用于上传
      *
      * @param bucketName bucket名称
-     * @param objectName 文件名称
+     * @param key        文件名称
      * @param expires    过期时间,请注意该值必须小于7天
      * @return url
      * @see AmazonS3#generatePresignedUrl(String bucketName, String key, Date expiration)
      */
-    public String getPutObjectURL(String bucketName, String objectName, Duration expires) {
-        return getObjectURL(bucketName, objectName, expires, HttpMethod.PUT);
+    public String getUploadUrl(String bucketName, String key, Duration expires) {
+        return getSignedUrl(bucketName, key, expires, HttpMethod.PUT);
     }
 
     /**
      * 获取文件外链
      *
      * @param bucketName bucket名称
-     * @param objectName 文件名称
-     * @param minutes    过期时间，单位分钟,请注意该值必须小于7天
+     * @param key        文件名称
+     * @param seconds    过期时间，单位秒,请注意该值必须小于7天
      * @param method     文件操作方法：GET（下载）、PUT（上传）
      * @return url
      * @see AmazonS3#generatePresignedUrl(String bucketName, String key, Date expiration,
      * HttpMethod method)
      */
-    public String getObjectURL(String bucketName, String objectName, int minutes, HttpMethod method) {
-        return getObjectURL(bucketName, objectName, Duration.ofMinutes(minutes), method);
+    public String getSignedUrl(String bucketName, String key, long seconds, HttpMethod method) {
+        return getSignedUrl(bucketName, key, Duration.ofSeconds(seconds), method);
     }
 
     /**
      * 获取文件外链
      *
      * @param bucketName bucket名称
-     * @param objectName 文件名称
+     * @param key        文件名称
      * @param expires    过期时间，请注意该值必须小于7天
      * @param method     文件操作方法：GET（下载）、PUT（上传）
      * @return url
      * @see AmazonS3#generatePresignedUrl(String bucketName, String key, Date expiration,
      * HttpMethod method)
      */
-    public String getObjectURL(String bucketName, String objectName, Duration expires, HttpMethod method) {
+    public String getSignedUrl(String bucketName, String key, Duration expires, HttpMethod method) {
         // Set the pre-signed URL to expire after `expires`.
         Date expiration = Date.from(Instant.now().plus(expires));
-
+        GeneratePresignedUrlRequest request = new GeneratePresignedUrlRequest(bucketName, key).withMethod(method).withExpiration(expiration);
         // Generate the pre-signed URL.
-        URL url = amazonS3.generatePresignedUrl(
-                new GeneratePresignedUrlRequest(bucketName, objectName).withMethod(method).withExpiration(expiration));
+        URL url = amazonS3.generatePresignedUrl(request);
+        return url.toString();
+    }
+
+    /**
+     * 获取文件URL
+     * <p>
+     * If the object identified by the given bucket and key has public read permissions
+     * (ex: {@link CannedAccessControlList#PublicRead}), then this URL can be directly
+     * accessed to retrieve the object's data.
+     *
+     * @param key 文件名称
+     * @return url
+     */
+    public String getUrl(String key) {
+        URL url = amazonS3.getUrl(getBucketName(), key);
         return url.toString();
     }
 
@@ -226,11 +241,11 @@ public class AwsOssTemplate {
      * accessed to retrieve the object's data.
      *
      * @param bucketName bucket名称
-     * @param objectName 文件名称
+     * @param key        文件名称
      * @return url
      */
-    public String getObjectURL(String bucketName, String objectName) {
-        URL url = amazonS3.getUrl(bucketName, objectName);
+    public String getUrl(String bucketName, String key) {
+        URL url = amazonS3.getUrl(bucketName, key);
         return url.toString();
     }
 
@@ -258,6 +273,19 @@ public class AwsOssTemplate {
     }
 
     /**
+     * 获取文件
+     *
+     * @param bucketName bucket名称
+     * @param key        文件名称
+     * @return 二进制流
+     * @see <a href= "http://docs.aws.amazon.com/goto/WebAPI/s3-2006-03-01/GetObject">AWS
+     * API Documentation</a>
+     */
+    public S3Object getObject(String bucketName, String key) {
+        return amazonS3.getObject(bucketName, key);
+    }
+
+    /**
      * 上传文件
      *
      * @param file 上传文件类
@@ -275,8 +303,7 @@ public class AwsOssTemplate {
      * @return 文件信息
      */
     public PutObjectResult upload(String key, MultipartFile file) {
-        return upload(ossProperties.getAws()
-                .getBucketName(), key, file);
+        return upload(getBucketName(), key, file);
     }
 
     /**
@@ -289,7 +316,7 @@ public class AwsOssTemplate {
      */
     @SneakyThrows
     public PutObjectResult upload(String bucketName, String key, MultipartFile file) {
-        return upload(bucketName, key, file.getInputStream(), null);
+        return upload(bucketName, key, file.getInputStream(), file.getSize(), file.getContentType());
     }
 
     /**
@@ -300,7 +327,7 @@ public class AwsOssTemplate {
      * @return 文件信息
      */
     public PutObjectResult upload(String key, InputStream stream) {
-        return upload(ossProperties.getAws().getBucketName(), key, stream, null);
+        return upload(getBucketName(), key, stream, null);
     }
 
     /**
@@ -312,10 +339,57 @@ public class AwsOssTemplate {
      * @return 文件信息
      */
     private PutObjectResult upload(String bucketName, String key, InputStream stream, ObjectMetadata matadata) {
-        // 创建存储桶
-        createBucket(bucketName);
-        // 覆盖上传
         return amazonS3.putObject(bucketName, key, stream, matadata);
+    }
+
+    /**
+     * 上传文件
+     *
+     * @param bucketName bucket名称
+     * @param key        文件名称
+     * @param stream     文件流
+     * @throws IOException IOException
+     */
+    public void upload(String bucketName, String key, InputStream stream) throws IOException {
+        upload(bucketName, key, stream, stream.available(), "application/octet-stream");
+    }
+
+    /**
+     * 上传文件 指定 contextType
+     *
+     * @param bucketName  bucket名称
+     * @param key         文件名称
+     * @param stream      文件流
+     * @param contextType 文件类型
+     * @throws IOException IOException
+     */
+    public void upload(String bucketName, String key, String contextType, InputStream stream)
+            throws IOException {
+        upload(bucketName, key, stream, stream.available(), contextType);
+    }
+
+    /**
+     * 上传文件
+     *
+     * @param bucketName  bucket名称
+     * @param key         文件名称
+     * @param stream      文件流
+     * @param size        大小
+     * @param contextType 类型
+     * @see <a href= "http://docs.aws.amazon.com/goto/WebAPI/s3-2006-03-01/PutObject">AWS
+     * API Documentation</a>
+     */
+    public PutObjectResult upload(String bucketName, String key,
+                                  InputStream stream, long size, String contextType) {
+        ObjectMetadata metadata = new ObjectMetadata();
+        metadata.setContentLength(size);
+        metadata.setContentType(contextType);
+        PutObjectRequest request = new PutObjectRequest(bucketName, key, stream, metadata);
+        // Setting the read limit value to one byte greater than the size of stream will
+        // reliably avoid a ResetException
+        request.getRequestClientOptions()
+                .setReadLimit(Long.valueOf(size).intValue() + 1);
+        return amazonS3.putObject(request);
     }
 
     /**

@@ -7,8 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.IOException;
-
 /**
  * @author: fight2048
  * @e-mail: fight2048@outlook.com
@@ -28,18 +26,18 @@ public class OssController {
     private AwsOssTemplate template;
 
     @GetMapping("/signature")
-    public Object getSign() {
-        return template.getObjectURL("telemedicine-files", 111 + "");
+    public Object getSignature(String key) {
+        return template.getUrl(key);
     }
 
     @PostMapping("/file")
-    public Object postFile(@RequestParam("file") MultipartFile file) throws IOException {
-        return template.upload("file56565", file.getInputStream());
+    public Object postFile(@RequestParam("file") MultipartFile file) {
+        return template.upload("test/" + file.getOriginalFilename(), file);
     }
 
     @DeleteMapping("/file")
     public Object deleteFile(String key) {
-        amazonS3.deleteObject("telemedicine-files", key);
+        template.deleteObject(key);
         return "OK";
     }
 }
