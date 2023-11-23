@@ -146,7 +146,7 @@ public class OssProperties {
         /**
          * 使用协议，如http/https
          */
-        private String scheme;
+        private String scheme = "https";
 
         public String getScheme() {
             return scheme;
@@ -174,7 +174,7 @@ public class OssProperties {
         /**
          * 使用协议，如http/https
          */
-        private String scheme;
+        private String scheme = "https";
 
         public String getAppId() {
             return appId;

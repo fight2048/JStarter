@@ -12,11 +12,11 @@ server:
 #OSS配置
 oss:
   aliyun:
-    access-key: LTAI5tFgdimsSzDxdc8d5iAT
-    secret-key: 2OHLhMwtL5WcWo7XU5ai3K5feQabCz
-    bucket-name: telemedicine-files
+    access-key: 这里填写你的access key
+    secret-key: 这里填写你的secret key
+    bucket-name: turing-cloud-test
     enabled: true
-    endpoint: oss-cn-shenzhen.aliyuncs.com
+    endpoint: 这里填写你的endpoint
     scheme: https
 #  # 七牛云配置
 #  qiniu:
