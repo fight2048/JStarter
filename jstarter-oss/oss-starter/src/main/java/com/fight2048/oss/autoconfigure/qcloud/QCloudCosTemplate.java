@@ -241,8 +241,6 @@ public class QCloudCosTemplate {
     }
 
     private PutObjectResult upload(String bucketName, String key, InputStream stream, ObjectMetadata metadata) {
-        // 创建存储桶
-        createBucket(bucketName);
         return cosClient.putObject(bucketName, key, stream, metadata);
     }
 

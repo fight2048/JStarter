@@ -237,9 +237,6 @@ public class MinIoTemplate {
      */
     @SneakyThrows
     public ObjectWriteResponse upload(String bucketName, String key, InputStream stream, long objectSize) {
-        // 创建存储桶
-        createBucket(bucketName);
-
         PutObjectArgs args = PutObjectArgs.builder()
                 .bucket(bucketName)
                 .object(key)

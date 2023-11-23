@@ -1,6 +1,9 @@
 import com.aliyun.oss.common.comm.Protocol;
 import org.junit.jupiter.api.Test;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+
 /**
  * @author: fight2048
  * @e-mail: fight2048@outlook.com
@@ -18,5 +21,10 @@ class CommonTest {
         }
         System.out.println(Protocol.HTTP);
         System.out.println(Protocol.valueOf("HTTP"));
+    }
+
+    @Test
+    void dateTimeFormatter() {
+        System.out.println(LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy/MM/dd")));
     }
 }

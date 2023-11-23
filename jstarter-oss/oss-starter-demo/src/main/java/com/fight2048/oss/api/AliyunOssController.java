@@ -1,7 +1,7 @@
 package com.fight2048.oss.api;
 
-import com.amazonaws.services.s3.AmazonS3;
-import com.fight2048.oss.autoconfigure.aws.AwsOssTemplate;
+import com.aliyun.oss.OSS;
+import com.fight2048.oss.autoconfigure.aliyun.AliyunOssTemplate;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -17,17 +17,16 @@ import org.springframework.web.multipart.MultipartFile;
  */
 @Slf4j
 @RestController
-@RequestMapping("/oss")
-public class OssController {
-
+@RequestMapping("/oss/aliyun")
+public class AliyunOssController {
     @Autowired
-    private AmazonS3 amazonS3;
+    private OSS oss;
     @Autowired
-    private AwsOssTemplate template;
+    private AliyunOssTemplate template;
 
     @GetMapping("/signature")
     public Object getSignature(String key) {
-        return template.getUrl(key);
+        return template.getUploadToken(key);
     }
 
     @PostMapping("/file")

@@ -23,15 +23,23 @@
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <java.version>17</java.version>
         <official.site>http://fight2048.com</official.site>
-        <aws.version>1.12.423</aws.version>
-        <aliyun.oss.version>3.17.1</aliyun.oss.version>
-        <qcloud.oss.version>5.6.161</qcloud.oss.version>
-        <qiniu.oss.version>7.14.0</qiniu.oss.version>
+        <lombok.version>1.18.30</lombok.version>
+        <aws.version>1.12.594</aws.version>
+        <aliyun.oss.version>3.17.2</aliyun.oss.version>
+        <qcloud.oss.version>5.6.187</qcloud.oss.version>
+        <qiniu.oss.version>7.2.23</qiniu.oss.version>
         <minio.oss.version>8.5.4</minio.oss.version>
     </properties>
 
     <dependencyManagement>
         <dependencies>
+            <!-- lombok -->
+            <dependency>
+                <groupId>org.projectlombok</groupId>
+                <artifactId>lombok</artifactId>
+                <version>${lombok.version}</version>
+            </dependency>
+
             <!--亚马逊云-->
             <dependency>
                 <groupId>com.amazonaws</groupId>
@@ -95,6 +103,13 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-configuration-processor</artifactId>
             <optional>true</optional>
+        </dependency>
+
+        <!-- lombok -->
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <scope>provided</scope>
         </dependency>
 
         <!--亚马逊云-->

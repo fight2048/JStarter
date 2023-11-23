@@ -10,8 +10,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.InputStream;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
-import java.time.LocalDateTime;
-import java.time.ZoneId;
+import java.time.*;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.util.concurrent.TimeUnit;
@@ -167,7 +166,7 @@ public class AliyunOssTemplate {
      * 获取文件相对路径
      *
      * @param bucketName 存储桶名称
-     * @param key   存储桶对象名称
+     * @param key        存储桶对象名称
      * @return 文件相对路径
      */
     public String getObjectPath(String bucketName, String key) {
@@ -210,8 +209,8 @@ public class AliyunOssTemplate {
     /**
      * 上传文件
      *
-     * @param key 上传文件名
-     * @param file     上传文件类
+     * @param key  上传文件名
+     * @param file 上传文件类
      * @return 文件信息
      */
     public PutObjectResult upload(String key, MultipartFile file) {
@@ -256,7 +255,7 @@ public class AliyunOssTemplate {
      * 删除文件
      *
      * @param bucketName 存储桶名称
-     * @param key   存储桶对象名称
+     * @param key        存储桶对象名称
      */
     public void deleteObject(String bucketName, String key) {
         ossClient.deleteObject(bucketName, key);
@@ -283,10 +282,28 @@ public class AliyunOssTemplate {
      * @return 文件信息
      */
     private PutObjectResult upload(String bucketName, String key, InputStream stream) {
-        // 创建存储桶
-        createBucket(bucketName);
         // 覆盖上传
         return ossClient.putObject(bucketName, key, stream);
+    }
+
+    /**
+     * 获取上传凭证，普通上传
+     *
+     * @return 上传凭证
+     */
+    public Map<String, Object> getUploadToken() {
+        String dir = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy/MM/dd"));
+        return getUploadToken(getBucketName(), dir);
+    }
+
+    /**
+     * 获取上传凭证，普通上传
+     *
+     * @param dir 上传后的目录
+     * @return 上传凭证
+     */
+    public Map<String, Object> getUploadToken(String dir) {
+        return getUploadToken(getBucketName(), dir);
     }
 
     /**
@@ -318,11 +335,11 @@ public class AliyunOssTemplate {
      * @return 上传凭证
      */
     public Map<String, Object> getUploadToken(String bucketName, String dir, long duration, TimeUnit timeUnit) {
-        OssProperties.AliyunOssProperties properties = ossProperties.getAliyun();
-
-        long expire = System.currentTimeMillis() + timeUnit.toMillis(duration);
-        Date expiration = new Date(expire);
+        Duration expires = Duration.of(duration, timeUnit.toChronoUnit());
+        Date expiration = Date.from(Instant.now().plus(expires));
         LocalDateTime localDateTime = LocalDateTime.ofInstant(expiration.toInstant(), ZoneId.systemDefault());
+
+        OssProperties.AliyunOssProperties properties = ossProperties.getAliyun();
 
         PolicyConditions policy = new PolicyConditions();
         //默认大小限制1G
