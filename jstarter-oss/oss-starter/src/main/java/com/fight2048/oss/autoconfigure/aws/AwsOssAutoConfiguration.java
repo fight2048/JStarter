@@ -51,7 +51,7 @@ public class AwsOssAutoConfiguration {
     @Bean
     @ConditionalOnMissingBean
     @ConditionalOnBean({OSS.class})
-    public AwsOssTemplate awsOssTemplate(OSS ossClient, OssProperties ossProperties) {
-        return new AwsOssTemplate(ossClient, ossProperties);
+    public AwsOssTemplate awsOssTemplate(AmazonS3 amazonS3, OssProperties ossProperties) {
+        return new AwsOssTemplate(amazonS3, ossProperties);
     }
 }
