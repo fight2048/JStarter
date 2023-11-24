@@ -363,8 +363,8 @@ public class AwsOssTemplate {
      * @param contextType 文件类型
      * @throws IOException IOException
      */
-    public void upload(String bucketName, String key, String contextType, InputStream stream)
-            throws IOException {
+    public void upload(String bucketName, String key,
+                       String contextType, InputStream stream) throws IOException {
         upload(bucketName, key, stream, stream.available(), contextType);
     }
 
