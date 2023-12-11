@@ -9,6 +9,7 @@ import org.springframework.util.StringUtils;
 
 import java.lang.reflect.Method;
 import java.util.Objects;
+import java.util.Optional;
 
 public class Swagger3LoggerParser implements LoggerParser {
     @Override
@@ -20,17 +21,20 @@ public class Swagger3LoggerParser implements LoggerParser {
 
     @Override
     public LoggerTag parse(MethodInterceptorHolder holder) {
-        Tag api = holder.findAnnotation(Tag.class);
+        Tag tag = holder.findAnnotation(Tag.class);
         Operation operation = AnnotatedElementUtils.findMergedAnnotation(holder.getMethod(), Operation.class);
-        String action = "";
-        if (Objects.nonNull(api)) {
-            action = action.concat(api.name());
-        }
-        if (Objects.nonNull(operation)) {
-            action = StringUtils.isEmpty(action)
-                    ? operation.summary()
-                    : action + "-" + operation.summary();
-        }
+
+        final String tagName = Optional.ofNullable(tag)
+                .map(t -> t.name())
+                .orElse("");
+
+        String action = Optional.ofNullable(operation)
+                .map(o -> o.summary())
+                .map(s -> StringUtils.isEmpty(tagName)
+                        ? s
+                        : tagName + "-" + s
+                ).orElse("--");
+
         return new LoggerTag(action);
     }
 }

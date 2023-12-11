@@ -62,6 +62,7 @@ public class AopLoggerAdvisor extends StaticMethodMatcherPointcutAdvisor {
 
         if (Objects.nonNull(tag)) {
             metadate.setAction(tag.getAction());
+            metadate.setType(tag.getType());
         }
         metadate.setParameters(holder.getParameters());
         metadate.setTarget(holder.getTarget().getClass());

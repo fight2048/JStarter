@@ -8,6 +8,7 @@ import org.springframework.util.StringUtils;
 
 import java.lang.reflect.Method;
 import java.util.Objects;
+import java.util.Optional;
 
 public class SwaggerLoggerParser implements LoggerParser {
     @Override
@@ -21,15 +22,18 @@ public class SwaggerLoggerParser implements LoggerParser {
     public LoggerTag parse(MethodInterceptorHolder holder) {
         Api api = holder.findAnnotation(Api.class);
         ApiOperation operation = holder.findAnnotation(ApiOperation.class);
-        String action = "";
-        if (Objects.nonNull(api)) {
-            action = action.concat(api.value());
-        }
-        if (Objects.nonNull(operation)) {
-            action = StringUtils.isEmpty(action)
-                    ? operation.value()
-                    : action + "-" + operation.value();
-        }
+
+        final String apiValue = Optional.ofNullable(api)
+                .map(a -> a.value())
+                .orElse("");
+
+        String action = Optional.ofNullable(operation)
+                .map(o -> o.value())
+                .map(v -> StringUtils.isEmpty(apiValue)
+                        ? v
+                        : apiValue + "-" + v
+                ).orElse("--");
+
         return new LoggerTag(action);
     }
 }
