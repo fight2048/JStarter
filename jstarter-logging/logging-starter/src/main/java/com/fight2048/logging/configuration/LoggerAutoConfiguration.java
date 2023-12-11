@@ -1,7 +1,8 @@
 package com.fight2048.logging.configuration;
 
-import com.fight2048.logging.listener.LoggerListener;
+import com.fight2048.logging.annotation.Logger;
 import com.fight2048.logging.aop.AopLoggerAdvisor;
+import com.fight2048.logging.listener.LoggerListener;
 import com.fight2048.logging.parser.DefaultLoggerParser;
 import com.fight2048.logging.parser.Swagger3LoggerParser;
 import com.fight2048.logging.parser.SwaggerLoggerParser;
@@ -27,21 +28,23 @@ public class LoggerAutoConfiguration {
     }
 
     @Bean
+    @Order(1)
+    @ConditionalOnClass(Logger.class)
     public DefaultLoggerParser defaultAccessLoggerParser() {
         return new DefaultLoggerParser();
     }
 
     @Bean
-    @ConditionalOnClass(Api.class)
-    @Order(10)
-    public SwaggerLoggerParser swaggerLoggerParser() {
-        return new SwaggerLoggerParser();
+    @Order(2)
+    @ConditionalOnClass(Tag.class)
+    public Swagger3LoggerParser swagger3LoggerParser() {
+        return new Swagger3LoggerParser();
     }
 
     @Bean
-    @ConditionalOnClass({Tag.class})
-    @Order(1)
-    public Swagger3LoggerParser swagger3LoggerParser() {
-        return new Swagger3LoggerParser();
+    @Order(10)
+    @ConditionalOnClass(Api.class)
+    public SwaggerLoggerParser swaggerLoggerParser() {
+        return new SwaggerLoggerParser();
     }
 }
