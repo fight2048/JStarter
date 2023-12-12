@@ -25,7 +25,7 @@ public class DefaultLoggerParser implements LoggerParser {
         String action = Stream.of(classAnnotation, methodAnnotation)
                 .filter(Objects::nonNull)
                 .map(Logger::value)
-                .reduce((c, m) -> c.concat("-").concat(m))
+                .reduce((c, m) -> c.concat("/").concat(m))
                 .orElse("");
 
         //类上有类型，则去类上的，方法上有类型，则取方法上的

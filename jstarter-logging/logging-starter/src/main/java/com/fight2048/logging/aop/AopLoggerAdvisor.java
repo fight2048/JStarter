@@ -69,7 +69,7 @@ public class AopLoggerAdvisor extends StaticMethodMatcherPointcutAdvisor {
         metadate.setMethod(holder.getMethod());
 
         HttpServletRequest request = getHttpServletRequest();
-        if (null != request) {
+        if (Objects.nonNull(request)) {
             metadate.setHttpHeaders(getHeaders(request));
             metadate.setIp(getIpAddr(request));
             metadate.setHttpMethod(request.getMethod());

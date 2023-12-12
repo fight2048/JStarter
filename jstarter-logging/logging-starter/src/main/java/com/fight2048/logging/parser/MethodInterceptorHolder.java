@@ -100,12 +100,12 @@ public class MethodInterceptorHolder {
 
     public static <T extends Annotation> T findMethodAnnotation(Class targetClass, Method method, @Nullable Class<T> annotationType) {
         Method m = method;
-        T a = org.springframework.core.annotation.AnnotationUtils.findAnnotation(m, annotationType);
+        T a = AnnotationUtils.findAnnotation(m, annotationType);
         if (a != null) {
             return a;
         }
         m = ClassUtils.getMostSpecificMethod(m, targetClass);
-        a = org.springframework.core.annotation.AnnotationUtils.findAnnotation(m, annotationType);
+        a = AnnotationUtils.findAnnotation(m, annotationType);
         if (a == null) {
             List<Class> supers = new ArrayList<>(Arrays.asList(targetClass.getInterfaces()));
             if (targetClass.getSuperclass() != Object.class) {

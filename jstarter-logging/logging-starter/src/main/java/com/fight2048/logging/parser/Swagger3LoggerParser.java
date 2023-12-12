@@ -32,7 +32,7 @@ public class Swagger3LoggerParser implements LoggerParser {
                 .map(o -> o.summary())
                 .map(s -> StringUtils.isEmpty(tagName)
                         ? s
-                        : tagName + "-" + s
+                        : tagName + "/" + s
                 ).orElse("--");
 
         return new LoggerTag(action);

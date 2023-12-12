@@ -31,7 +31,7 @@ public class SwaggerLoggerParser implements LoggerParser {
                 .map(o -> o.value())
                 .map(v -> StringUtils.isEmpty(apiValue)
                         ? v
-                        : apiValue + "-" + v
+                        : apiValue + "/" + v
                 ).orElse("--");
 
         return new LoggerTag(action);
